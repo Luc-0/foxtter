@@ -13,6 +13,7 @@ const COLORS = {
   primaryShadow: '#d96e48',
   white: '#ffffff',
   black: '#0d0d0d',
+  incorrect: '#e74c3c',
 };
 
 const Button = styled.button`
@@ -65,13 +66,15 @@ const Title = styled.h1`
   font-weight: bold;
 `;
 
-// const Text = styled.span`
-//   font-family: inherit;
-//   font-size: ${(props) => (props.size ? props.size : '1em')};
-//   font-weight: ${(props) => (props.weight ? props.weight : '0')};
-//   color: ${(props) => (props.color ? props.color : COLORS.black)};
-//   word-wrap: break-word;
-// `;
+const Text = styled.span`
+  display: block;
+  font-family: inherit;
+  font-size: ${(props) => (props.size ? props.size : '1em')};
+  font-weight: ${(props) => (props.weight ? props.weight : '0')};
+  color: ${(props) => (props.color ? COLORS.white : COLORS.black)};
+  margin: ${(props) => (props.mg ? props.mg : '0')};
+  padding: ${(props) => (props.pd ? props.pd : '0')};
+`;
 
 const Icon = styled(BackgroundImage)`
   background-image: url(${(props) => props.imgUrl});
@@ -79,4 +82,38 @@ const Icon = styled(BackgroundImage)`
   height: 64px;
 `;
 
-export { Button, Container, FlexContainer, BackgroundImage, Title, Icon };
+const Input = styled.input`
+  display: block;
+  width: ${(props) => (props.wt ? props.wt : '100%')};
+  height: ${(props) => (props.ht ? props.ht : '45px')};
+
+  font-size: ${(props) => (props.size ? props.size : '1.2em')};
+  margin: ${(props) => (props.mg ? props.mg : '0')};
+  padding: ${(props) => (props.pd ? props.pd : '5px')};
+  border: 1px solid
+    ${(props) => (props.incorrect ? COLORS.incorrect : COLORS.seconday)};
+  border-radius: 3px;
+  outline: none;
+
+  &:focus {
+    border: 2px solid ${COLORS.primary};
+  }
+`;
+
+const HelperText = styled(Text)`
+  display: inline-block;
+  cursor: pointer;
+  color: ${(props) => (props.color ? props.color : COLORS.primary)};
+`;
+
+export {
+  Button,
+  Container,
+  FlexContainer,
+  BackgroundImage,
+  Title,
+  Icon,
+  Text,
+  Input,
+  HelperText,
+};
