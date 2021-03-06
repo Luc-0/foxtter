@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Signup from '../components/Signup';
 import {
   Container,
   FlexContainer,
@@ -10,8 +11,11 @@ import {
 } from '../components/StyledComponents';
 
 export default function Login() {
+  const [signupOpen, setSignupOpen] = useState(false);
+
   return (
     <Container wt="100vw" ht="100vh">
+      {signupOpen ? <Signup handleClose={closeSignup} /> : null}
       <Container wt="25%" mg="0 auto" pd="10px 0">
         <Icon imgUrl="images/foxtter-icon.png" />
         <Text size="2.2em" weight="700" mg="20px 0">
@@ -34,9 +38,19 @@ export default function Login() {
         <Button primary>Log in</Button>
         <FlexContainer jc="space-between" mg="15px 0">
           <HelperText size="1.1em">Forgot password?</HelperText>
-          <HelperText size="1.1em">Sign up for Foxtter</HelperText>
+          <HelperText onClick={openSignup} size="1.1em">
+            Sign up for Foxtter
+          </HelperText>
         </FlexContainer>
       </Container>
     </Container>
   );
+
+  function openSignup() {
+    setSignupOpen(true);
+  }
+
+  function closeSignup() {
+    setSignupOpen(false);
+  }
 }

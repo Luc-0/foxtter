@@ -26,6 +26,8 @@ const Button = styled.button`
   background: ${(props) => (props.primary ? COLORS.primary : COLORS.white)};
   color: ${(props) => (props.primary ? COLORS.white : COLORS.primary)};
   font-size: 1em;
+  font-weight: ${(props) => (props.weight ? props.weight : '')};
+  margin: ${(props) => (props.mg ? props.mg : '')};
   padding: 0.25em 1em;
   border: 1px solid ${COLORS.primaryShadow};
   border-radius: 100px;
@@ -38,17 +40,23 @@ const Container = styled.div`
   height: ${(props) => (props.ht ? props.ht : 'auto')};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '0')};
+  background-color: ${(props) => (props.bgc ? props.bgc : '')};
+  border-radius: ${(props) => (props.br ? props.br : '')};
 `;
 
-const FlexContainer = styled.div`
-  width: 100%;
-  height: 100%;
+const FlexContainer = styled(Container)`
+  width: ${(props) => (props.wt ? props.wt : '100%')};
+  height: ${(props) => (props.ht ? props.ht : '100%')};
   display: flex;
   flex-direction: ${(props) => (props.column ? 'column' : 'row')};
   justify-content: ${(props) => (props.jc ? props.jc : 'center')};
   align-items: ${(props) => (props.ai ? props.ai : 'center')};
-  margin: ${(props) => (props.mg ? props.mg : '0')};
-  padding: ${(props) => (props.pd ? props.pd : '0')};
+`;
+
+const TransparentBackground = styled(Container)`
+  position: ${(props) => (props.pos ? props.pos : 'absolute')};
+  background-color: ${(props) =>
+    props.rgba ? props.rgba : 'rgba(0, 0, 0, 0.5)'};
 `;
 
 const BackgroundImage = styled.div`
@@ -70,7 +78,7 @@ const Text = styled.span`
   display: block;
   font-family: inherit;
   font-size: ${(props) => (props.size ? props.size : '1em')};
-  font-weight: ${(props) => (props.weight ? props.weight : '0')};
+  font-weight: ${(props) => (props.weight ? props.weight : '')};
   color: ${(props) => (props.color ? COLORS.white : COLORS.black)};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '0')};
@@ -78,6 +86,7 @@ const Text = styled.span`
 
 const Icon = styled(BackgroundImage)`
   background-image: url(${(props) => props.imgUrl});
+  margin: ${(props) => (props.mg ? props.mg : '0')};
   width: 64px;
   height: 64px;
 `;
@@ -116,4 +125,5 @@ export {
   Text,
   Input,
   HelperText,
+  TransparentBackground,
 };

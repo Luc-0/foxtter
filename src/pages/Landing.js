@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Container,
@@ -8,10 +8,14 @@ import {
   Icon,
 } from '../components/StyledComponents';
 import { Link } from 'react-router-dom';
+import Signup from '../components/Signup';
 
 export default function Landing() {
+  const [signupOpen, setSignupOpen] = useState(false);
+
   return (
     <Container wt="100vw" ht="100vh">
+      {signupOpen ? <Signup handleClose={closeSignup} /> : null}
       <FlexContainer>
         <Container wt="120%" ht="100%">
           <BackgroundImage src="images/foxtter-landing-page-background.jfif" />
@@ -21,7 +25,9 @@ export default function Landing() {
           <Title size="3.5em">Welcome to Foxtter</Title>
           <Container wt="60%" ht="110px" mg="0 20px">
             <FlexContainer column jc="space-between">
-              <Button primary>Sign up</Button>
+              <Button onClick={openSignup} primary>
+                Sign up
+              </Button>
               <Button to="/login" as={Link}>
                 Log in
               </Button>
@@ -31,4 +37,12 @@ export default function Landing() {
       </FlexContainer>
     </Container>
   );
+
+  function openSignup() {
+    setSignupOpen(true);
+  }
+
+  function closeSignup() {
+    setSignupOpen(false);
+  }
 }
