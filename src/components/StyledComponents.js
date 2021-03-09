@@ -177,6 +177,8 @@ const UsernameText = styled(Text)`
 const Icon = styled(BackgroundImage)`
   width: ${(props) => (props.wt ? props.wt : '64px')};
   height: ${(props) => (props.ht ? props.ht : '64px')};
+  min-width: ${(props) => (props.wt ? props.wt : '64px')};
+  min-height: ${(props) => (props.ht ? props.ht : '64px')};
   background-image: url(${(props) => props.imgUrl});
   margin: ${(props) => (props.mg ? props.mg : '0')};
   pointer-events: none;
