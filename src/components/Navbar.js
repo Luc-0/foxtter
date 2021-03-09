@@ -9,6 +9,7 @@ import {
   UsernameText,
 } from '../components/StyledComponents';
 import { Link } from 'react-router-dom';
+import ProfilePicture from './ProfilePicture';
 
 export default function Navbar() {
   const [prevSelected, setPrevSelected] = useState();
@@ -73,11 +74,7 @@ export default function Navbar() {
         ht="50px"
         mg="auto 0 0"
       >
-        <Icon
-          wt="32px"
-          ht="32px"
-          imgUrl="images/profile-picture-placeholder.png"
-        />
+        <ProfilePicture />
         <Container wt="auto" ht="100%">
           <NavText mg="10px 15px 0">Name</NavText>
           <UsernameText mg="5px 15px 0">@Username</UsernameText>
