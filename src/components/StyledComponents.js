@@ -25,6 +25,7 @@ const COLORS = {
   incorrect: '#e74c3c',
   username: 'rgb(91, 112, 131)',
   borderColor: 'rgb(235, 238, 240)',
+  spaceContainer: 'rgb(247, 249, 250)',
 };
 
 const Button = styled.button`
@@ -76,9 +77,23 @@ const Container = styled.div`
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
   border-radius: ${(props) => (props.br ? props.br : '')};
 
+  &.page-title-container {
+    border-bottom: 1px solid ${COLORS.lightGray};
+  }
+
   &.fweet-container {
     background-color: ${COLORS.white};
     border-bottom: 1px solid ${COLORS.lightGray};
+  }
+
+  &.space-container {
+    background-color: ${COLORS.spaceContainer};
+    width: 100%;
+    height: 12px;
+  }
+
+  &.fweets-container {
+    border-top: 1px solid ${COLORS.borderColor};
   }
 
   &.fweet-card {
@@ -104,6 +119,14 @@ const NavbarContainer = styled(FlexContainer)`
   width: 270px;
   height: 100vh;
   min-height: 400px;
+`;
+
+const HomeContainer = styled(FlexContainer)`
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  max-width: 600px;
+  border-right: 1px solid ${COLORS.borderColor};
 `;
 
 const TransparentBackground = styled(Container)`
@@ -229,6 +252,7 @@ export {
   NavText,
   NavbarContainer,
   UsernameText,
+  HomeContainer,
   Span,
   Textarea,
   HighlightCircle,
