@@ -24,6 +24,7 @@ const COLORS = {
   lightGray: '#d3d3d3',
   incorrect: '#e74c3c',
   username: 'rgb(91, 112, 131)',
+  borderColor: 'rgb(235, 238, 240)',
 };
 
 const Button = styled.button`
@@ -79,6 +80,14 @@ const Container = styled.div`
     background-color: ${COLORS.white};
     border-bottom: 1px solid ${COLORS.lightGray};
   }
+
+  &.fweet-card {
+    border-bottom: 1px solid ${COLORS.borderColor};
+  }
+
+  &.fweet-card-text-container {
+    min-height: 50px;
+  }
 `;
 
 const FlexContainer = styled(Container)`
@@ -126,6 +135,11 @@ const Text = styled.span`
   color: ${(props) => (props.color ? COLORS.white : COLORS.black)};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '0')};
+
+  &.fweet-text {
+    line-height: 1.3em;
+    word-wrap: break-word;
+  }
 `;
 
 const NavText = styled(Text)`
@@ -142,6 +156,7 @@ const Icon = styled(BackgroundImage)`
   height: ${(props) => (props.ht ? props.ht : '64px')};
   background-image: url(${(props) => props.imgUrl});
   margin: ${(props) => (props.mg ? props.mg : '0')};
+  pointer-events: none;
 `;
 
 const Input = styled.input`
@@ -180,6 +195,25 @@ const HelperText = styled(Text)`
   color: ${(props) => (props.color ? props.color : COLORS.primary)};
 `;
 
+const Span = styled(Text)`
+  display: inline;
+`;
+
+const HighlightCircle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${(props) => (props.wt ? props.wt : '40px')};
+  height: ${(props) => (props.ht ? props.ht : '40px')};
+  border-radius: 50%;
+  border: none;
+
+  &:hover {
+    background-color: rgba(242, 123, 80, 0.1);
+    color: ${COLORS.primary};
+  }
+`;
+
 export {
   Button,
   Container,
@@ -195,4 +229,7 @@ export {
   NavText,
   NavbarContainer,
   UsernameText,
+  Span,
+  Textarea,
+  HighlightCircle,
 };
