@@ -116,7 +116,8 @@ const FlexContainer = styled(Container)`
 
 const NavbarContainer = styled(FlexContainer)`
   border-right: 1px solid ${COLORS.lightGray};
-  width: 270px;
+  width: 300px;
+  min-width: 300px;
   height: 100vh;
   min-height: 400px;
 `;
