@@ -31,7 +31,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   width: ${(props) => (props.wt ? props.wt : '100%')};
-  height: 48px;
+  height: ${(props) => (props.ht ? props.ht : '48px')};
   font-family: inherit;
   background: ${(props) => (props.primary ? COLORS.primary : COLORS.white)};
   color: ${(props) => (props.primary ? COLORS.white : COLORS.primary)};
@@ -74,6 +74,11 @@ const Container = styled.div`
   padding: ${(props) => (props.pd ? props.pd : '0')};
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
   border-radius: ${(props) => (props.br ? props.br : '')};
+
+  &.fweet-container {
+    background-color: ${COLORS.white};
+    border-bottom: 1px solid ${COLORS.lightGray};
+  }
 `;
 
 const FlexContainer = styled(Container)`
@@ -155,6 +160,18 @@ const Input = styled.input`
   &:focus {
     border: 2px solid ${COLORS.primary};
   }
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 64px;
+  padding: 5px;
+  font-size: 1.3em;
+
+  resize: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid ${COLORS.lightGray};
 `;
 
 const HelperText = styled(Text)`
