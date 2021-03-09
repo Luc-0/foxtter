@@ -120,7 +120,7 @@ const Title = styled.h1`
 
 const Text = styled.span`
   display: block;
-  font-family: inherit;
+  font-family: 'Roboto', sans-serif;
   font-size: ${(props) => (props.size ? props.size : '1em')};
   font-weight: ${(props) => (props.weight ? props.weight : '')};
   color: ${(props) => (props.color ? COLORS.white : COLORS.black)};
