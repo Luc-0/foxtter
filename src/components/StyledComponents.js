@@ -72,6 +72,8 @@ const NavButton = styled(Button)`
 const Container = styled.div`
   width: ${(props) => (props.wt ? props.wt : '100%')};
   height: ${(props) => (props.ht ? props.ht : 'auto')};
+  min-width: ${(props) => (props.mwt ? props.mwt : '')};
+  min-height: ${(props) => (props.mht ? props.mht : '')};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '0')};
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
@@ -79,6 +81,11 @@ const Container = styled.div`
 
   &.page-title-container {
     border-bottom: 1px solid ${COLORS.lightGray};
+    width: 100%;
+    height: 55px;
+    min-height: 55px;
+
+    justify-content: flex-start;
   }
 
   &.fweet-container {
@@ -102,6 +109,31 @@ const Container = styled.div`
 
   &.fweet-card-text-container {
     min-height: 50px;
+  }
+
+  &.page-container {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-width: 600px;
+    border-right: 1px solid ${COLORS.borderColor};
+  }
+
+  &.profile-picture-container {
+    background-color: white;
+    border-radius: 50%;
+    overflow: hidden;
+    border: ${(props) => (props.border ? '3px solid white' : 'none')};
+  }
+
+  &.profile-page-picture-container {
+    position: absolute;
+    top: 65%;
+    left: 2%;
   }
 `;
 
@@ -143,6 +175,11 @@ const BackgroundImage = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  pointer-events: none;
+
+  &.profile-background {
+    position: relative;
+  }
 `;
 
 const Title = styled.h1`
@@ -231,8 +268,9 @@ const HighlightCircle = styled.div`
   align-items: center;
   width: ${(props) => (props.wt ? props.wt : '40px')};
   height: ${(props) => (props.ht ? props.ht : '40px')};
+  margin: ${(props) => (props.mg ? props.mg : '0')};
   border-radius: 50%;
-  border: none;
+  border: ${(props) => (props.border ? '1px solid' + COLORS.primary : 'none')};
 
   &:hover {
     background-color: rgba(242, 123, 80, 0.1);
