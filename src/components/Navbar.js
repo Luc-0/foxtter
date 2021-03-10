@@ -6,7 +6,7 @@ import {
   NavButton,
   NavText,
   FlexContainer,
-  UsernameText,
+  LightText,
 } from '../components/StyledComponents';
 import { Link } from 'react-router-dom';
 import ProfilePicture from './ProfilePicture';
@@ -77,7 +77,7 @@ export default function Navbar() {
         <ProfilePicture />
         <Container wt="auto" ht="100%">
           <NavText mg="10px 15px 0">Name</NavText>
-          <UsernameText mg="5px 15px 0">@Username</UsernameText>
+          <LightText mg="5px 15px 0">@Username</LightText>
         </Container>
         <NavButton mg="0 0 0 auto">
           <Icon wt="24px" ht="24px" imgUrl="images/logout-icon.png" />

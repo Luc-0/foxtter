@@ -23,7 +23,7 @@ const COLORS = {
   black: '#0d0d0d',
   lightGray: '#d3d3d3',
   incorrect: '#e74c3c',
-  username: 'rgb(91, 112, 131)',
+  lightText: 'rgb(91, 112, 131)',
   borderColor: 'rgb(235, 238, 240)',
   spaceContainer: 'rgb(247, 249, 250)',
 };
@@ -171,8 +171,8 @@ const NavText = styled(Text)`
   margin: ${(props) => (props.mg ? props.mg : '0 15px')};
 `;
 
-const UsernameText = styled(Text)`
-  color: ${COLORS.username};
+const LightText = styled(Text)`
+  color: ${COLORS.lightText};
 `;
 
 const Icon = styled(BackgroundImage)`
@@ -254,7 +254,7 @@ export {
   NavButton,
   NavText,
   NavbarContainer,
-  UsernameText,
+  LightText,
   HomeContainer,
   Span,
   Textarea,

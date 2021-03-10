@@ -5,7 +5,7 @@ import {
   FlexContainer,
   Icon,
   Text,
-  UsernameText,
+  LightText,
   HighlightCircle,
 } from './StyledComponents';
 
@@ -30,9 +30,9 @@ export default function FweetCard(props) {
           <Text weight="600" mg="0 10px 0 0">
             {props.name || 'Name'}
           </Text>
-          <UsernameText>{props.username || '@username'}</UsernameText>
-          <UsernameText mg="0 10px">·</UsernameText>
-          <UsernameText>{props.time || '00m'}</UsernameText>
+          <LightText>{props.username || '@username'}</LightText>
+          <LightText mg="0 10px">·</LightText>
+          <LightText>{props.time || '00m'}</LightText>
         </FlexContainer>
         <Container pd="10px">
           <Text className="fweet-text">{props.text || 'text'}</Text>
