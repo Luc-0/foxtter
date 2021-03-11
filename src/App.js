@@ -19,51 +19,51 @@ function App() {
           path="/login"
           component={Login}
         />
-      </Switch>
 
-      <FlexContainer jc="flex-start" ai="flex-start">
-        {/* Authenticated */}
-        {true ? <Navbar /> : null}
-        <main>
-          <FlexContainer>
-            <Switch>
-              <PrivateRoute
-                authenticated={true}
-                exact
-                path="/home"
-                component={Home}
-              />
-              <PrivateRoute
-                authenticated={true}
-                exact
-                path="/notifications"
-                component={() => <div>Notifications</div>}
-              />
-              <PrivateRoute
-                authenticated={true}
-                exact
-                path="/messages"
-                component={() => <div>Messages</div>}
-              />
-              <PrivateRoute
-                authenticated={true}
-                exact
-                path="/connect_people"
-                component={() => <div>Connect people</div>}
-              />
-              <PrivateRoute
-                authenticated={true}
-                exact
-                path="/:id"
-                component={Profile}
-              />
-            </Switch>
-            <Container bgc="rgb(235, 238, 240)" wt="100%">
-              Hold...
-            </Container>
-          </FlexContainer>
-        </main>
-      </FlexContainer>
+        <FlexContainer jc="flex-start" ai="flex-start">
+          {/* Authenticated */}
+          {true ? <Navbar /> : null}
+          <main>
+            <FlexContainer>
+              <Switch>
+                <PrivateRoute
+                  authenticated={true}
+                  exact
+                  path="/home"
+                  component={Home}
+                />
+                <PrivateRoute
+                  authenticated={true}
+                  exact
+                  path="/notifications"
+                  component={() => <div>Notifications</div>}
+                />
+                <PrivateRoute
+                  authenticated={true}
+                  exact
+                  path="/messages"
+                  component={() => <div>Messages</div>}
+                />
+                <PrivateRoute
+                  authenticated={true}
+                  exact
+                  path="/connect_people"
+                  component={() => <div>Connect people</div>}
+                />
+                <PrivateRoute
+                  authenticated={true}
+                  exact
+                  path="/:id"
+                  component={Profile}
+                />
+              </Switch>
+              <Container bgc="rgb(235, 238, 240)" wt="100%">
+                Hold...
+              </Container>
+            </FlexContainer>
+          </main>
+        </FlexContainer>
+      </Switch>
     </Router>
   );
 }

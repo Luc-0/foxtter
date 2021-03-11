@@ -1,6 +1,3 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import ProfilePicture from '../components/ProfilePicture';
 import {
   FlexContainer,
   Icon,
@@ -12,8 +9,21 @@ import {
   Text,
   HighlightCircle,
 } from '../components/StyledComponents';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
+import React from 'react';
+
+import ProfilePicture from '../components/ProfilePicture';
+import TabList from '../components/TabList';
 
 export default function Profile(props) {
+  const location = useLocation();
+
   return (
     <FlexContainer className="page-container">
       <FlexContainer className="page-title-container">
@@ -117,8 +127,37 @@ export default function Profile(props) {
           </FlexContainer>
         </FlexContainer>
 
-        {/* Tabs */}
-        <FlexContainer></FlexContainer>
+        <Router>
+          <TabList
+            items={[
+              { text: 'Fweets', to: `${location.pathname}`, selected: true },
+              {
+                text: 'Fweets & Replies',
+                to: `${location.pathname}/with_replies`,
+              },
+              { text: 'Likes', to: `${location.pathname}/likes` },
+            ]}
+          />
+          <FlexContainer>
+            <Switch>
+              <Route
+                exact
+                path={`${location.pathname}`}
+                component={() => <div>Fweets</div>}
+              />
+              <Route
+                exact
+                path={`${location.pathname}/with_replies`}
+                component={() => <div>Fweets replies</div>}
+              />
+              <Route
+                exact
+                path={`${location.pathname}/likes`}
+                component={() => <div>No likes yet</div>}
+              />
+            </Switch>
+          </FlexContainer>
+        </Router>
       </FlexContainer>
     </FlexContainer>
   );

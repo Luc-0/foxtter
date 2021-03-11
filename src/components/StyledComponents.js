@@ -278,6 +278,30 @@ const HighlightCircle = styled.div`
   }
 `;
 
+const TabItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 52px;
+  min-height: 52px;
+
+  color: ${COLORS.black};
+  border: 3px solid rgba(0, 0, 0, 0);
+  flex: 1 1 0px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(242, 123, 80, 0.1);
+    color: ${COLORS.primary};
+  }
+
+  &.selected {
+    color: ${COLORS.primary};
+    border-bottom: 3px solid ${COLORS.primary};
+  }
+`;
+
 export {
   Button,
   Container,
@@ -297,4 +321,5 @@ export {
   Span,
   Textarea,
   HighlightCircle,
+  TabItem,
 };
