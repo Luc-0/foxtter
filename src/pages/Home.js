@@ -3,8 +3,6 @@ import {
   HomeContainer,
   Container,
   FlexContainer,
-  Icon,
-  Text,
   Span,
 } from '../components/StyledComponents';
 import Fweet from '../components/Fweet';

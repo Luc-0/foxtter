@@ -128,12 +128,23 @@ const Container = styled.div`
     border-radius: 50%;
     overflow: hidden;
     border: ${(props) => (props.border ? '3px solid white' : 'none')};
+    min-width: ${(props) => (props.wt ? props.wt : '64px')};
+    min-height: ${(props) => (props.ht ? props.ht : '64px')};
   }
 
   &.profile-page-picture-container {
     position: absolute;
     top: 65%;
     left: 2%;
+  }
+
+  &.profile-card {
+    width: 338px;
+    height: 73px;
+    min-width: 338px;
+    min-height: 73px;
+    background-color: ${COLORS.spaceContainer};
+    border-bottom: 1px solid ${COLORS.borderColor};
   }
 `;
 

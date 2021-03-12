@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Container, FlexContainer } from './components/StyledComponents';
+import ProfileCard from './components/ProfileCard';
 
 function App() {
   return (
@@ -58,7 +59,8 @@ function App() {
                 />
               </Switch>
               <Container bgc="rgb(235, 238, 240)" wt="100%">
-                Hold...
+                <ProfileCard />
+                <ProfileCard />
               </Container>
             </FlexContainer>
           </main>
