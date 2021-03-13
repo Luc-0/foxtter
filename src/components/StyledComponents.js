@@ -22,7 +22,8 @@ const COLORS = {
   white: '#ffffff',
   black: '#0d0d0d',
   lightGray: '#d3d3d3',
-  incorrect: '#e74c3c',
+  valid: '#2ecc71',
+  invalid: '#e74c3c',
   lightText: 'rgb(91, 112, 131)',
   borderColor: 'rgb(235, 238, 240)',
   spaceContainer: 'rgb(247, 249, 250)',
@@ -241,8 +242,13 @@ const Input = styled.input`
   font-size: ${(props) => (props.size ? props.size : '1.2em')};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '5px')};
-  border: 1px solid
-    ${(props) => (props.incorrect ? COLORS.incorrect : COLORS.seconday)};
+  border: ${(props) => {
+    if (props.border) {
+      return `2px solid ${props.valid ? COLORS.valid : COLORS.invalid}`;
+    }
+
+    return `2px solid ${COLORS.seconday}`;
+  }};
   border-radius: 3px;
   outline: none;
 
@@ -313,6 +319,27 @@ const TabItem = styled.div`
   }
 `;
 
+const AlertMessage = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: auto;
+  height: 38px;
+
+  font-size: 1.2em;
+  padding: 0 10px;
+  background-color: ${COLORS.invalid};
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+`;
+
 export {
   Button,
   Container,
@@ -333,4 +360,5 @@ export {
   Textarea,
   HighlightCircle,
   TabItem,
+  AlertMessage,
 };
