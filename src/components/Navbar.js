@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { signOut } from '../redux/actions';
+
 import {
   Container,
   NavbarContainer,
@@ -11,7 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import ProfilePicture from './ProfilePicture';
 
-export default function Navbar() {
+const Navbar = (props) => {
   const [prevSelected, setPrevSelected] = useState();
   const dataNavButtonId = 'navbutton';
 
@@ -79,7 +82,7 @@ export default function Navbar() {
           <NavText mg="10px 15px 0">Name</NavText>
           <LightText mg="5px 15px 0">@Username</LightText>
         </Container>
-        <NavButton mg="0 0 0 auto">
+        <NavButton onClick={props.signOut} mg="0 0 0 auto">
           <Icon wt="24px" ht="24px" imgUrl="images/logout-icon.png" />
         </NavButton>
       </FlexContainer>
@@ -104,4 +107,6 @@ export default function Navbar() {
     target.classList.add('selected');
     setPrevSelected(target);
   }
-}
+};
+
+export default connect(null, { signOut })(Navbar);

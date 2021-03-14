@@ -3,7 +3,7 @@ import { firestore } from '../services/firebase';
 export async function createNewUserDoc(uid, name) {
   const username = await createValidUsername(name);
 
-  firestore().collection('users').doc(uid).set({
+  const newUser = {
     id: uid,
     name: name,
     username: username,
@@ -11,7 +11,11 @@ export async function createNewUserDoc(uid, name) {
     likes: [],
     following: [],
     followers: [],
-  });
+  };
+
+  await firestore().collection('users').doc(uid).set(newUser);
+
+  return newUser;
 }
 
 async function getAllUsernames() {
@@ -54,5 +58,19 @@ async function createValidUsername(name) {
     }
 
     return username;
+  }
+}
+
+export async function getUserById(id) {
+  try {
+    const userDoc = await firestore().collection('users').doc(id).get();
+
+    if (userDoc.exists) {
+      return userDoc.data();
+    }
+
+    return Promise.reject('user does not exist.');
+  } catch (error) {
+    console.log(error.code);
   }
 }

@@ -1,16 +1,26 @@
 import { auth } from '../services/firebase';
-import { createNewUserDoc } from './firestore';
 
-export async function signup(email, password, name) {
-  await auth()
+export async function signup(email, password) {
+  const userCredential = await auth()
     .createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      createNewUserDoc(user.uid, name);
-    })
     .catch((error) => {
       throw error;
     });
+
+  const user = userCredential.user;
+
+  return user;
+}
+
+export async function signIn(email, password) {
+  const userCredential = await auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      throw error;
+    });
+  const user = userCredential.user;
+
+  return user;
 }
 
 export async function isEmailAlreadyUsed(email) {
@@ -32,4 +42,14 @@ export async function isEmailAlreadyUsed(email) {
   }
 
   return true;
+}
+
+export function getUserId() {
+  const user = auth().currentUser;
+
+  return user ? user.uid : false;
+}
+
+export async function signOut() {
+  return auth().signOut();
 }

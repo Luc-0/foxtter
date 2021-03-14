@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { signup } from '../redux/actions';
+
 import {
   Container,
   FlexContainer,
@@ -9,10 +12,29 @@ import {
   Icon,
   AlertMessage,
 } from './StyledComponents';
-import { signup, isEmailAlreadyUsed } from '../helpers/auth';
+import { isEmailAlreadyUsed } from '../helpers/auth';
 import { validateEmail, validateName } from '../helpers/validation';
 
-export default function Signup(props) {
+const Signup = (props) => {
+  useEffect(() => {
+    if (props.signupError) {
+      const timeoutAlert = showAlert(10000);
+
+      return function cleanup() {
+        clearTimeout(timeoutAlert);
+      };
+    }
+
+    function showAlert(ms) {
+      setTryAgain(true);
+      const timeout = setTimeout(() => {
+        setTryAgain(false);
+      }, ms);
+
+      return timeout;
+    }
+  }, [props.signupError]);
+
   const [signupForm, setSignupForm] = useState({
     name: {
       name: 'name',
@@ -112,12 +134,7 @@ export default function Signup(props) {
       const email = formatSpace(signupForm.email.value);
       const password = signupForm.password.value;
 
-      await signup(email, password, name).catch((error) => {
-        setTryAgain(true);
-        setTimeout(() => {
-          setTryAgain(false);
-        }, 5000);
-      });
+      props.signup(email, password, name);
     }
   }
 
@@ -141,9 +158,13 @@ export default function Signup(props) {
     const password = signupForm.password.value;
 
     const validName = validateName(name);
-    const validFormat = validateEmail(email);
-    const isUsed = await isEmailAlreadyUsed(email);
-    const validEmail = validFormat && !isUsed;
+    const validEmailFormat = validateEmail(email);
+    let isUsed = false;
+
+    if (validEmailFormat) {
+      isUsed = await isEmailAlreadyUsed(email);
+    }
+    const validEmail = validEmailFormat && !isUsed;
 
     const validPassword = password.length >= 6;
 
@@ -207,4 +228,12 @@ export default function Signup(props) {
       props.handleClose();
     }
   }
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    signupError: state.auth.signupError,
+  };
+};
+
+export default connect(mapStateToProps, { signup })(Signup);

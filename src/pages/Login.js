@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../redux/actions';
+
 import Signup from '../components/Signup';
 import {
   Container,
@@ -10,29 +13,70 @@ import {
   HelperText,
 } from '../components/StyledComponents';
 
-export default function Login() {
+const Login = (props) => {
+  useEffect(() => {
+    if (props.loginError) {
+      showBorder();
+    }
+
+    console.log(123);
+  }, [props.loginError]);
+
   const [signupOpen, setSignupOpen] = useState(false);
+  const [loginForm, setLoginForm] = useState({
+    email: {
+      name: 'email',
+      border: false,
+      value: '',
+    },
+    password: {
+      name: 'password',
+      border: false,
+      value: '',
+    },
+  });
 
   return (
     <Container wt="100vw" ht="100vh">
       {signupOpen ? <Signup handleClose={closeSignup} /> : null}
-      <Container wt="25%" mg="0 auto" pd="10px 0">
+      <Container
+        as="form"
+        onSubmit={handleSubmit}
+        wt="25%"
+        mg="0 auto"
+        pd="10px 0"
+      >
         <Icon imgUrl="images/foxtter-icon.png" />
         <Text size="2.2em" weight="700" mg="20px 0">
           Log in to Foxtter
         </Text>
         <Container>
-          <Text as="label" htmlFor="login-email-username" size="1.3em">
+          <Text as="label" htmlFor="login-email" size="1.3em">
             Email/Username
           </Text>
-          <Input id="login-email-username" mg="5px 0" />
+          <Input
+            name={loginForm.email.name}
+            value={loginForm.email.value}
+            border={loginForm.email.border}
+            onChange={handleInputChange}
+            id="login-email"
+            mg="5px 0"
+          />
         </Container>
 
         <Container mg="15px 0 20px">
           <Text as="label" htmlFor="login-password" size="1.3em">
             Password
           </Text>
-          <Input id="login-password" type="password" mg="5px 0" />
+          <Input
+            name={loginForm.password.name}
+            value={loginForm.password.value}
+            border={loginForm.password.border}
+            onChange={handleInputChange}
+            id="login-password"
+            type="password"
+            mg="5px 0"
+          />
         </Container>
 
         <Button primary>Log in</Button>
@@ -46,6 +90,15 @@ export default function Login() {
     </Container>
   );
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const email = loginForm.email.value;
+    const password = loginForm.password.value;
+
+    props.login(email, password);
+  }
+
   function openSignup() {
     setSignupOpen(true);
   }
@@ -53,4 +106,43 @@ export default function Login() {
   function closeSignup() {
     setSignupOpen(false);
   }
-}
+
+  function handleInputChange(e) {
+    const inputName = e.target.name;
+    let inputValue = e.target.value;
+
+    setLoginForm({
+      ...loginForm,
+      [inputName]: {
+        ...loginForm[inputName],
+        value: inputValue,
+        border: false,
+      },
+    });
+  }
+
+  function showBorder() {
+    updateBorder(loginForm.email.name, true);
+    updateBorder(loginForm.password.name, true);
+  }
+
+  function updateBorder(inputName, border) {
+    setLoginForm((prevLoginForm) => {
+      return {
+        ...prevLoginForm,
+        [inputName]: {
+          ...prevLoginForm[inputName],
+          border: border,
+        },
+      };
+    });
+  }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    loginError: state.auth.loginError,
+  };
+};
+
+export default connect(mapStateToProps, { login })(Login);
