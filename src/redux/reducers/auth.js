@@ -1,4 +1,5 @@
 import {
+  CLEAR_LOGIN_ERROR,
   LOGIN,
   LOGIN_FAIL,
   SIGNOUT,
@@ -24,6 +25,8 @@ const auth = (state = initialState, action) => {
       });
     case LOGIN_FAIL:
       return updateObject(state, { loginError: action.payload.error });
+    case CLEAR_LOGIN_ERROR:
+      return updateObject(state, { loginError: null });
     case SIGNOUT:
       return updateObject(state, {
         authenticated: false,

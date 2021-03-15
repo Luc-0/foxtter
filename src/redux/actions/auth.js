@@ -1,4 +1,10 @@
-import { SIGNUP_FAIL, LOGIN, SIGNOUT, LOGIN_FAIL } from './actionTypes';
+import {
+  SIGNUP_FAIL,
+  LOGIN,
+  SIGNOUT,
+  LOGIN_FAIL,
+  CLEAR_LOGIN_ERROR,
+} from './actionTypes';
 import {
   signup as signupHelper,
   signIn,
@@ -45,6 +51,12 @@ const loginFail = (error) => {
     },
   };
 };
+
+export function clearLoginError() {
+  return {
+    type: CLEAR_LOGIN_ERROR,
+  };
+}
 
 export function login(email, password) {
   return (dispatch) => {

@@ -24,6 +24,9 @@ const COLORS = {
   lightGray: '#d3d3d3',
   valid: '#2ecc71',
   invalid: '#e74c3c',
+  invalidBackground: '#f8d7da',
+  invalidShadow: '#f5c6cb',
+  invalidText: '#721c24',
   lightText: 'rgb(91, 112, 131)',
   borderColor: 'rgb(235, 238, 240)',
   spaceContainer: 'rgb(247, 249, 250)',
@@ -340,6 +343,24 @@ const AlertMessage = styled.div`
   color: white;
 `;
 
+const WrongBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: ${(props) => (props.wt ? props.wt : '100%')};
+  height: ${(props) => (props.ht ? props.ht : 'auto')};
+  min-width: ${(props) => (props.mwt ? props.mwt : '')};
+  min-height: ${(props) => (props.mht ? props.mht : '38px')};
+  margin: ${(props) => (props.mg ? props.mg : '0')};
+  padding: '10px';
+
+  border-radius: 10px;
+  background-color: ${COLORS.invalidBackground};
+  border: 1px solid ${COLORS.invalidShadow};
+  color: ${COLORS.invalidText};
+`;
+
 export {
   Button,
   Container,
@@ -361,4 +382,5 @@ export {
   HighlightCircle,
   TabItem,
   AlertMessage,
+  WrongBox,
 };

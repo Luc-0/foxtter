@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../redux/actions';
+import { login, clearLoginError } from '../redux/actions';
+import { validateEmail } from '../helpers/validation';
 
 import Signup from '../components/Signup';
 import {
@@ -11,17 +12,11 @@ import {
   Text,
   Button,
   HelperText,
+  WrongBox,
 } from '../components/StyledComponents';
 
 const Login = (props) => {
-  useEffect(() => {
-    if (props.loginError) {
-      showBorder();
-    }
-
-    console.log(123);
-  }, [props.loginError]);
-
+  const [showInvalidLogin, setShowInvalidLogin] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [loginForm, setLoginForm] = useState({
     email: {
@@ -35,6 +30,12 @@ const Login = (props) => {
       value: '',
     },
   });
+
+  useEffect(() => {
+    props.clearLoginError();
+  }, []);
+
+  useEffect(handleLoginError, [props.loginError]);
 
   return (
     <Container wt="100vw" ht="100vh">
@@ -50,11 +51,17 @@ const Login = (props) => {
         <Text size="2.2em" weight="700" mg="20px 0">
           Log in to Foxtter
         </Text>
+        {showInvalidLogin ? (
+          <WrongBox mg="15px 0">Invalid email or password.</WrongBox>
+        ) : null}
         <Container>
           <Text as="label" htmlFor="login-email" size="1.3em">
-            Email/Username
+            Email
           </Text>
           <Input
+            onFocus={() => {
+              hideBorder();
+            }}
             name={loginForm.email.name}
             value={loginForm.email.value}
             border={loginForm.email.border}
@@ -69,6 +76,9 @@ const Login = (props) => {
             Password
           </Text>
           <Input
+            onFocus={() => {
+              hideBorder();
+            }}
             name={loginForm.password.name}
             value={loginForm.password.value}
             border={loginForm.password.border}
@@ -93,9 +103,15 @@ const Login = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const email = loginForm.email.value;
+    const email = loginForm.email.value.trim();
     const password = loginForm.password.value;
 
+    if (!validateEmail(email)) {
+      showBorder();
+      return;
+    }
+
+    props.clearLoginError();
     props.login(email, password);
   }
 
@@ -116,14 +132,25 @@ const Login = (props) => {
       [inputName]: {
         ...loginForm[inputName],
         value: inputValue,
-        border: false,
       },
     });
+  }
+
+  function handleLoginError() {
+    if (props.loginError) {
+      showBorder();
+      setShowInvalidLogin(true);
+    }
   }
 
   function showBorder() {
     updateBorder(loginForm.email.name, true);
     updateBorder(loginForm.password.name, true);
+  }
+
+  function hideBorder() {
+    updateBorder(loginForm.email.name, false);
+    updateBorder(loginForm.password.name, false);
   }
 
   function updateBorder(inputName, border) {
@@ -145,4 +172,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, clearLoginError })(Login);
