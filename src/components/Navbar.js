@@ -66,7 +66,12 @@ const Navbar = (props) => {
           data-btnid={dataNavButtonId}
           onClick={handleSelect}
           as={Link}
-          to={`/${props.user.username}`}
+          to={{
+            pathname: `/${props.user.username}`,
+            state: {
+              profileUser: props.user,
+            },
+          }}
         >
           <Icon wt="24px" ht="24px" imgUrl="images/profile-icon.png" />
           <NavText>Profile</NavText>
