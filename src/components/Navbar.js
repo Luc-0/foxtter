@@ -66,7 +66,7 @@ const Navbar = (props) => {
           data-btnid={dataNavButtonId}
           onClick={handleSelect}
           as={Link}
-          to="/profile"
+          to={`/${props.user.username}`}
         >
           <Icon wt="24px" ht="24px" imgUrl="images/profile-icon.png" />
           <NavText>Profile</NavText>
@@ -79,10 +79,10 @@ const Navbar = (props) => {
           ht="50px"
           mg="auto 0 0"
         >
-          <ProfilePicture />
+          <ProfilePicture imgUrl={props.user.pictureUrl} />
           <Container wt="auto" ht="100%">
-            <NavText mg="10px 15px 0">Name</NavText>
-            <LightText mg="5px 15px 0">@Username</LightText>
+            <NavText mg="10px 15px 0">{props.user.name}</NavText>
+            <LightText mg="5px 15px 0">@{props.user.username}</LightText>
           </Container>
           <NavButton onClick={props.signOut} mg="0 0 0 auto">
             <Icon wt="24px" ht="24px" imgUrl="images/logout-icon.png" />
@@ -112,4 +112,10 @@ const Navbar = (props) => {
   }
 };
 
-export default connect(null, { signOut })(Navbar);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps, { signOut })(Navbar);
