@@ -162,11 +162,16 @@ const FlexContainer = styled(Container)`
 `;
 
 const NavbarContainer = styled(FlexContainer)`
+  position: fixed;
   border-right: 1px solid ${COLORS.lightGray};
+  height: 100%;
   width: 300px;
-  min-width: 300px;
-  height: 100vh;
   min-height: 400px;
+`;
+
+const NavbarHeader = styled.header`
+  position: relative;
+  min-width: 300px;
 `;
 
 const HomeContainer = styled(FlexContainer)`
@@ -383,4 +388,5 @@ export {
   TabItem,
   AlertMessage,
   WrongBox,
+  NavbarHeader,
 };
