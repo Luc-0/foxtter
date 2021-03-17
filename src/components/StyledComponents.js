@@ -127,6 +127,10 @@ const Container = styled.div`
     border-right: 1px solid ${COLORS.borderColor};
   }
 
+  &.border-up {
+    border-top: 1px solid ${COLORS.borderColor};
+  }
+
   &.profile-picture-container {
     background-color: white;
     border-radius: 50%;
@@ -300,6 +304,10 @@ const HighlightCircle = styled.div`
   &:hover {
     background-color: rgba(242, 123, 80, 0.1);
     color: ${COLORS.primary};
+  }
+
+  &.load-more {
+    cursor: pointer;
   }
 `;
 

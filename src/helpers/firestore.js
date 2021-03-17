@@ -74,3 +74,20 @@ export async function getUserById(id) {
     console.log(error.code);
   }
 }
+
+export async function getAllUsers() {
+  const usersDocument = await firestore()
+    .collection('users')
+    .get()
+    .catch((error) => {
+      throw error;
+    });
+
+  const allUsers = [];
+
+  usersDocument.forEach((doc) => {
+    allUsers.push(doc.data());
+  });
+
+  return allUsers;
+}

@@ -14,6 +14,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Container, FlexContainer } from './components/StyledComponents';
 import ProfileCard from './components/ProfileCard';
+import Connect from './pages/Connect';
 
 function App(props) {
   useEffect(() => {
@@ -68,7 +69,7 @@ function App(props) {
                   authenticated={props.authenticated}
                   exact
                   path="/connect_people"
-                  component={() => <div>Connect people</div>}
+                  component={Connect}
                 />
                 <PrivateRoute
                   authenticated={props.authenticated}
