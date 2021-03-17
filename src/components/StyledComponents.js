@@ -83,7 +83,7 @@ const Container = styled.div`
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
   border-radius: ${(props) => (props.br ? props.br : '')};
 
-  &.page-title-container {
+  &.page-name-container {
     border-bottom: 1px solid ${COLORS.lightGray};
     width: 100%;
     height: 55px;
