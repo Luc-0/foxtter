@@ -30,6 +30,7 @@ const Profile = ({ currentUser, ...props }) => {
   useEffect(() => {
     // Get profile user from link state
     setProfileUser(props.location.state.profileUser);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

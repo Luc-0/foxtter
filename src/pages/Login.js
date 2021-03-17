@@ -33,8 +33,10 @@ const Login = (props) => {
 
   useEffect(() => {
     props.clearLoginError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(handleLoginError, [props.loginError]);
 
   return (

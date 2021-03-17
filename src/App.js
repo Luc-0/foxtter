@@ -23,6 +23,7 @@ function App(props) {
     if (userId) {
       props.loadUser(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
