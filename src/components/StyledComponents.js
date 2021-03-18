@@ -147,12 +147,13 @@ const Container = styled.div`
   }
 
   &.profile-card {
-    width: 338px;
+    width: 100%;
     height: 73px;
     min-width: 338px;
     min-height: 73px;
-    background-color: ${COLORS.spaceContainer};
+    background-color: white;
     border-bottom: 1px solid ${COLORS.borderColor};
+    cursor: pointer;
   }
 `;
 
