@@ -42,7 +42,7 @@ const Profile = ({ currentUser, ...props }) => {
           render={() => {
             return profileUser ? (
               <FlexContainer className="page-container">
-                <FlexContainer className="page-title-container">
+                <FlexContainer className="page-name-container">
                   <Link to="/home">
                     <Icon
                       mg="0 10px"
