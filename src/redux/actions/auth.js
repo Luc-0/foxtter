@@ -6,13 +6,19 @@ import {
   CLEAR_LOGIN_ERROR,
   FOLLOW,
   UNFOLLOW,
+  ADD_FWEET,
 } from './actionTypes';
 import {
   signup as signupHelper,
   signIn,
   signOut as signOutHelper,
 } from '../../helpers/auth';
-import { createNewUserDoc, getUserById } from '../../helpers/firestore';
+import {
+  createNewUserDoc,
+  getUserById,
+  createFweet,
+} from '../../helpers/firestore';
+import { firestore } from '../../services/firebase';
 
 const signInUser = (userData) => {
   return {
@@ -115,5 +121,42 @@ export function unfollow(userId) {
     payload: {
       userId: userId,
     },
+  };
+}
+
+const saveFweet = (fweet) => {
+  return {
+    type: ADD_FWEET,
+    payload: {
+      fweet: fweet,
+    },
+  };
+};
+
+export function addFweet(currentUser, fweetContent) {
+  return (dispatch) => {
+    const timestamp = firestore.FieldValue.serverTimestamp();
+    const newFweet = {
+      ...fweetContent,
+      likes: 0,
+      refweets: [],
+      replies: [],
+      timestamp: timestamp,
+    };
+
+    createFweet(currentUser.id, newFweet)
+      .then((doc) => {
+        const fweetId = doc.id;
+        newFweet.id = fweetId;
+        newFweet.name = currentUser.name;
+        newFweet.username = currentUser.username;
+        newFweet.userId = currentUser.id;
+        newFweet.profilePicture = currentUser.profilePicture;
+
+        dispatch(saveFweet(newFweet));
+      })
+      .catch((error) => {
+        console.log('create fweet error', error.message);
+      });
   };
 }

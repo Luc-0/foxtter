@@ -367,7 +367,7 @@ const WrongBox = styled.div`
   min-width: ${(props) => (props.mwt ? props.mwt : '')};
   min-height: ${(props) => (props.mht ? props.mht : '38px')};
   margin: ${(props) => (props.mg ? props.mg : '0')};
-  padding: '10px';
+  padding: 10px;
 
   border-radius: 10px;
   background-color: ${COLORS.invalidBackground};

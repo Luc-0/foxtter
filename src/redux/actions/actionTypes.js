@@ -6,6 +6,7 @@ export const SIGNOUT = 'SIGNOUT';
 export const CLEAR_LOGIN_ERROR = 'CLEAR_LOGIN_ERROR';
 export const FOLLOW = 'FOLLOW';
 export const UNFOLLOW = 'UNFOLLOW';
+export const ADD_FWEET = 'ADD_FWEET';
 
 // users
 export const LOAD_ALL_USERS = 'LOAD_ALL_USERS';
