@@ -4,6 +4,8 @@ import {
   LOGIN_FAIL,
   SIGNOUT,
   SIGNUP_FAIL,
+  FOLLOW,
+  UNFOLLOW,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -32,9 +34,25 @@ const auth = (state = initialState, action) => {
         authenticated: false,
         user: {},
       });
+    case FOLLOW:
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          following: [...state.user.following, action.payload.userId],
+        },
+      });
+    case UNFOLLOW:
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          following: state.user.following.filter(
+            (currId) => currId !== action.payload.userId
+          ),
+        },
+      });
+    default:
+      return state;
   }
-
-  return state;
 };
 
 export default auth;

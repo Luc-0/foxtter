@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 
 import ProfilePicture from '../components/ProfilePicture';
 import TabList from '../components/TabList';
+import FollowToggle from '../components/FollowToggle';
 
 const Profile = ({ currentUser, ...props }) => {
   const location = useLocation();
@@ -111,17 +112,7 @@ const Profile = ({ currentUser, ...props }) => {
                             imgUrl="images/messages-icon.png"
                           />
                         </HighlightCircle>
-
-                        {/* User follow? */}
-                        {true ? (
-                          <Button wt="auto" ht="38px" primary>
-                            Following
-                          </Button>
-                        ) : (
-                          <Button wt="auto" ht="38px">
-                            Follow
-                          </Button>
-                        )}
+                        <FollowToggle targetUser={profileUser} />
                       </FlexContainer>
                     )}
                   </FlexContainer>

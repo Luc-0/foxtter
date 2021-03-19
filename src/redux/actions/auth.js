@@ -4,6 +4,8 @@ import {
   SIGNOUT,
   LOGIN_FAIL,
   CLEAR_LOGIN_ERROR,
+  FOLLOW,
+  UNFOLLOW,
 } from './actionTypes';
 import {
   signup as signupHelper,
@@ -95,5 +97,23 @@ export function signOut() {
     signOutHelper().then(() => {
       dispatch(signOutUser());
     });
+  };
+}
+
+export function follow(userId) {
+  return {
+    type: FOLLOW,
+    payload: {
+      userId: userId,
+    },
+  };
+}
+
+export function unfollow(userId) {
+  return {
+    type: UNFOLLOW,
+    payload: {
+      userId: userId,
+    },
   };
 }

@@ -91,3 +91,19 @@ export async function getAllUsers() {
 
   return allUsers;
 }
+
+export async function follow(currentUserId, targetId) {
+  const currentUserRef = firestore().collection('users').doc(currentUserId);
+
+  return currentUserRef.update({
+    following: firestore.FieldValue.arrayUnion(targetId),
+  });
+}
+
+export async function unfollow(currentUserId, targetId) {
+  const currentUserRef = firestore().collection('users').doc(currentUserId);
+
+  return currentUserRef.update({
+    following: firestore.FieldValue.arrayRemove(targetId),
+  });
+}

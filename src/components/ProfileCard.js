@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { FlexContainer, Text, LightText, Button } from './StyledComponents';
+import { FlexContainer, Text, LightText } from './StyledComponents';
 import ProfilePicture from './ProfilePicture';
+import FollowToggle from './FollowToggle';
 
 export default function ProfileCard({ user }) {
   return (
@@ -25,16 +26,7 @@ export default function ProfileCard({ user }) {
         </Text>
         <LightText>{user ? `@${user.username}` : '@foxtter'}</LightText>
       </FlexContainer>
-      {/* following ? */}
-      {true ? (
-        <Button ht="32px" wt="auto" mg="0 0 0 auto" primary>
-          Following
-        </Button>
-      ) : (
-        <Button ht="32px" wt="auto" mg="0 0 0 auto">
-          Follow
-        </Button>
-      )}
+      {user ? <FollowToggle targetUser={user} margin="0 0 0 auto" /> : null}
     </FlexContainer>
   );
 }
