@@ -6,6 +6,7 @@ import {
   SIGNUP_FAIL,
   FOLLOW,
   UNFOLLOW,
+  ADD_FWEET,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -48,6 +49,13 @@ const auth = (state = initialState, action) => {
           following: state.user.following.filter(
             (currId) => currId !== action.payload.userId
           ),
+        },
+      });
+    case ADD_FWEET:
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          fweets: [...state.user.fweets, action.payload.fweet],
         },
       });
     default:

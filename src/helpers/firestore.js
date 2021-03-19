@@ -1,5 +1,23 @@
 import { firestore } from '../services/firebase';
 
+export async function createFweet(userId, fweet) {
+  const userFweetsRef = firestore()
+    .collection('users')
+    .doc(userId)
+    .collection('fweets');
+
+  return userFweetsRef.add(fweet);
+}
+
+export async function createFweet(userId, fweet) {
+  const userFweetsRef = firestore()
+    .collection('users')
+    .doc(userId)
+    .collection('fweets');
+
+  return userFweetsRef.add(fweet);
+}
+
 export async function createNewUserDoc(uid, name) {
   const username = await createValidUsername(name);
 
