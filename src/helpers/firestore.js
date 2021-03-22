@@ -178,3 +178,7 @@ export async function loadUsers(ids = []) {
     return error;
   }
 }
+
+export function timestamp() {
+  return firestore.Timestamp;
+}
