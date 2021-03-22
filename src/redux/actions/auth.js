@@ -135,13 +135,13 @@ const saveFweet = (fweet) => {
 
 export function addFweet(currentUser, fweetContent) {
   return (dispatch) => {
-    const timestamp = firestore.FieldValue.serverTimestamp();
+    const dateCreated = firestore.Timestamp.now().toDate();
     const newFweet = {
       ...fweetContent,
       likes: 0,
       refweets: [],
       replies: [],
-      timestamp: timestamp,
+      dateCreated: dateCreated,
     };
 
     createFweet(currentUser.id, newFweet)
