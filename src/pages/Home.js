@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadUsers } from '../redux/actions';
 
+import fweet from '../helpers/fweet';
+
 import { HomeContainer, Container } from '../components/StyledComponents';
 import Fweet from '../components/Fweet';
 import FweetCard from '../components/FweetCard';
@@ -94,20 +96,22 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
             break;
           }
 
-          const fweet = userFweets[fweetKeys[i]];
-          const newDisplayFweet = {
-            user: {
-              id: user.id,
-              name: user.name,
-              username: user.username,
-              pictureUrl: user.pictureUrl,
-            },
-            id: fweet.id,
-            text: fweet.text,
-          };
+          const userFweet = userFweets[fweetKeys[i]];
+
+          const newFweet = fweet(
+            user.id,
+            user.name,
+            user.username,
+            user.pictureUrl,
+            userFweet.id,
+            userFweet.text,
+            userFweet.dateCreated,
+            userFweet.refweets,
+            userFweet.replies
+          );
 
           count++;
-          newDisplayFweets.push(newDisplayFweet);
+          newDisplayFweets.push(newFweet);
         }
       });
 

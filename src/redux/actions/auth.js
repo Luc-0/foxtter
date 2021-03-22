@@ -18,6 +18,8 @@ import {
   getUserById,
   createFweet,
 } from '../../helpers/firestore';
+import fweet from '../../helpers/fweet';
+
 import { firestore } from '../../services/firebase';
 
 const signInUser = (userData) => {
@@ -136,7 +138,7 @@ const saveFweet = (fweet) => {
 export function addFweet(currentUser, fweetContent) {
   return (dispatch) => {
     const dateCreated = firestore.Timestamp.now().toDate();
-    const newFweet = {
+    const firestoreFweet = {
       ...fweetContent,
       likes: 0,
       refweets: [],
@@ -144,16 +146,20 @@ export function addFweet(currentUser, fweetContent) {
       dateCreated: dateCreated,
     };
 
-    createFweet(currentUser.id, newFweet)
+    createFweet(currentUser.id, firestoreFweet)
       .then((doc) => {
         const fweetId = doc.id;
-        newFweet.user = {
-          id: currentUser.id,
-          name: currentUser.name,
-          username: currentUser.username,
-          profilePicture: currentUser.profilePicture,
-        };
-        newFweet.id = fweetId;
+        const newFweet = fweet(
+          currentUser.id,
+          currentUser.name,
+          currentUser.username,
+          currentUser.pictureUrl,
+          fweetId,
+          firestoreFweet.text,
+          firestoreFweet.dateCreated,
+          firestoreFweet.refweets,
+          firestoreFweet.replies
+        );
 
         dispatch(saveFweet(newFweet));
       })
