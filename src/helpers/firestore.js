@@ -9,15 +9,6 @@ export async function createFweet(userId, fweet) {
   return userFweetsRef.add(fweet);
 }
 
-export async function createFweet(userId, fweet) {
-  const userFweetsRef = firestore()
-    .collection('users')
-    .doc(userId)
-    .collection('fweets');
-
-  return userFweetsRef.add(fweet);
-}
-
 export async function createNewUserDoc(uid, name) {
   const username = await createValidUsername(name);
 
@@ -29,6 +20,8 @@ export async function createNewUserDoc(uid, name) {
     likes: [],
     following: [],
     followers: [],
+    pictureUrl: '',
+    backgroundUrl: '',
   };
 
   await firestore().collection('users').doc(uid).set(newUser);
