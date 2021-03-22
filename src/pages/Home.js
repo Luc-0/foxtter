@@ -57,12 +57,7 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
       <Container className="fweets-container">
         {displayFweets ? (
           displayFweets.map((fweet) => (
-            <FweetCard
-              key={fweet.id}
-              name={fweet.user.name}
-              username={fweet.user.username}
-              text={fweet.text}
-            />
+            <FweetCard key={fweet.id} fweet={fweet} />
           ))
         ) : (
           <div>Loading</div>
