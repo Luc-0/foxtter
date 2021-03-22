@@ -125,3 +125,63 @@ export async function unfollow(currentUserId, targetId) {
     following: firestore.FieldValue.arrayRemove(targetId),
   });
 }
+
+export async function loadUsers(ids = []) {
+  if (!Array.isArray(ids)) {
+    return Promise.reject('Not an array');
+  }
+
+  const usersRef = firestore().collection('users').where('id', 'in', ids);
+
+  try {
+    const users = {};
+    const res = await usersRef.get();
+
+    if (res.empty) {
+      return users;
+    }
+
+    const docs = res.docs;
+
+    for (let i = 0; i < docs.length; i++) {
+      const userDoc = docs[i];
+      const currentUser = userDoc.data();
+      const currentUserFweets = {};
+
+      const fweetsRef = firestore()
+        .collection('users')
+        .doc(currentUser.id)
+        .collection('fweets');
+
+      // Get fweets for current user
+      try {
+        const fweetsRes = await fweetsRef.get();
+
+        if (fweetsRes.empty) {
+          currentUser.fweets = currentUserFweets;
+          users[currentUser.id] = currentUser;
+          continue;
+        }
+
+        fweetsRes.docs.forEach((fweetDoc) => {
+          currentUserFweets[fweetDoc.id] = {
+            id: fweetDoc.id,
+            ...fweetDoc.data(),
+          };
+        });
+
+        currentUser.fweets = currentUserFweets;
+        users[currentUser.id] = currentUser;
+      } catch (error) {
+        currentUser.fweets = currentUserFweets;
+        users[currentUser.id] = currentUser;
+        console.log('Loading user fweet error', error.message);
+      }
+    }
+
+    return users;
+    // res.docs.forEach(async (userDoc) => {
+  } catch (error) {
+    return error;
+  }
+}

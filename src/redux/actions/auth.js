@@ -147,11 +147,13 @@ export function addFweet(currentUser, fweetContent) {
     createFweet(currentUser.id, newFweet)
       .then((doc) => {
         const fweetId = doc.id;
+        newFweet.user = {
+          id: currentUser.id,
+          name: currentUser.name,
+          username: currentUser.username,
+          profilePicture: currentUser.profilePicture,
+        };
         newFweet.id = fweetId;
-        newFweet.name = currentUser.name;
-        newFweet.username = currentUser.username;
-        newFweet.userId = currentUser.id;
-        newFweet.profilePicture = currentUser.profilePicture;
 
         dispatch(saveFweet(newFweet));
       })

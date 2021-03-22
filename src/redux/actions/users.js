@@ -1,5 +1,12 @@
-import { LOAD_ALL_USERS, LOAD_ALL_USERS_ERROR } from './actionTypes';
-import { getAllUsers } from '../../helpers/firestore';
+import {
+  LOAD_ALL_USERS,
+  LOAD_ALL_USERS_ERROR,
+  LOAD_USERS,
+} from './actionTypes';
+import {
+  getAllUsers,
+  loadUsers as firestoreLoadUsers,
+} from '../../helpers/firestore';
 
 const loadAllUsersError = (error) => {
   return {
@@ -28,6 +35,29 @@ export function loadAllUsers() {
       .catch((error) => {
         console.log('error all users');
         dispatch(loadAllUsersError(error));
+      });
+  };
+}
+
+const saveUsers = (users) => {
+  return {
+    type: LOAD_USERS,
+    payload: {
+      users: users,
+    },
+  };
+};
+
+export function loadUsers(userIds) {
+  return (dispatch) => {
+    console.log('load following users action creator');
+    firestoreLoadUsers(userIds)
+      .then((users) => {
+        dispatch(saveUsers(users));
+      })
+      .catch((error) => {
+        // TODO: Dispatch error
+        console.log('error loading users', error.message);
       });
   };
 }
