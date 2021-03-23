@@ -1,40 +1,29 @@
+import { LOAD_USERS, SAVE_RECOMMENDED_USERS_ID } from './actionTypes';
 import {
-  LOAD_ALL_USERS,
-  LOAD_ALL_USERS_ERROR,
-  LOAD_USERS,
-} from './actionTypes';
-import {
-  getAllUsers,
   loadUsers as firestoreLoadUsers,
+  getRecommendedUsers,
 } from '../../helpers/firestore';
 
-const loadAllUsersError = (error) => {
+const saveRecommendedUsersId = (recommmendedUsersId) => {
   return {
-    type: LOAD_ALL_USERS_ERROR,
+    type: SAVE_RECOMMENDED_USERS_ID,
     payload: {
-      error: error,
+      recommendedUsersId: recommmendedUsersId,
     },
   };
 };
 
-const loadAll = (users) => {
-  return {
-    type: LOAD_ALL_USERS,
-    payload: {
-      users: users,
-    },
-  };
-};
-
-export function loadAllUsers() {
+export function loadRecommendedUsers(currentUserId, followingIds, limit) {
   return (dispatch) => {
-    getAllUsers()
+    getRecommendedUsers(currentUserId, followingIds, limit)
       .then((users) => {
-        dispatch(loadAll(users));
+        const recommendedUsersId = [...Object.keys(users)];
+
+        dispatch(saveUsers(users));
+        dispatch(saveRecommendedUsersId(recommendedUsersId));
       })
       .catch((error) => {
-        console.log('error all users');
-        dispatch(loadAllUsersError(error));
+        console.log('get recommended users error', error);
       });
   };
 }

@@ -9,6 +9,5 @@ export const UNFOLLOW = 'UNFOLLOW';
 export const ADD_FWEET = 'ADD_FWEET';
 
 // users
-export const LOAD_ALL_USERS = 'LOAD_ALL_USERS';
-export const LOAD_ALL_USERS_ERROR = 'LOAD_ALL_USERS_ERROR';
 export const LOAD_USERS = 'LOAD_USERS';
+export const SAVE_RECOMMENDED_USERS_ID = 'SAVE_RECOMMENDED_USERS_ID';

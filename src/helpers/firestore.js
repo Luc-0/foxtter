@@ -86,6 +86,42 @@ export async function getUserById(id) {
   }
 }
 
+export async function getRecommendedUsers(
+  currentUserId,
+  followingIds,
+  recommendedLimit
+) {
+  try {
+    const recommendUsersRef =
+      Array.isArray(followingIds) && followingIds.length > 0
+        ? firestore()
+            .collection('users')
+            .where('id', 'not-in', [currentUserId, ...followingIds])
+            .limit(recommendedLimit)
+        : firestore().collection('users').limit(recommendedLimit);
+
+    const users = {};
+    const res = await recommendUsersRef.get();
+
+    if (res.empty) {
+      return users;
+    }
+
+    const usersDoc = res.docs;
+    usersDoc.forEach((userDoc) => {
+      if (!userDoc.exists) {
+        return;
+      }
+
+      users[userDoc.id] = userDoc.data();
+    });
+
+    return users;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getAllUsers() {
   const usersDocument = await firestore()
     .collection('users')

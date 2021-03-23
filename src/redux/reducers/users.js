@@ -1,24 +1,23 @@
-import {
-  LOAD_ALL_USERS,
-  LOAD_ALL_USERS_ERROR,
-  LOAD_USERS,
-} from '../actions/actionTypes';
+import { LOAD_USERS, SAVE_RECOMMENDED_USERS_ID } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
   all: {},
-  loadAllError: null,
+  recommendedUsersId: [],
 };
 
 const users = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_ALL_USERS:
-      return updateObject(state, { all: action.payload.users });
-    case LOAD_ALL_USERS_ERROR:
-      return updateObject(state, { loadAllError: action.payload.error });
     case LOAD_USERS:
       return updateObject(state, {
         all: { ...state.all, ...action.payload.users },
+      });
+    case SAVE_RECOMMENDED_USERS_ID:
+      return updateObject(state, {
+        recommendedUsersId: [
+          ...action.payload.recommendedUsersId,
+          ...state.recommendedUsersId,
+        ],
       });
     default:
       return state;

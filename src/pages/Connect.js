@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadAllUsers } from '../redux/actions';
+import { loadRecommendedUsers } from '../redux/actions';
 
 import {
   Container,
@@ -12,33 +12,67 @@ import ProfileCard from '../components/ProfileCard';
 
 const Connect = ({ currentUser, users, ...props }) => {
   const initialMaxUsersDisplay = 10;
-  const maxDisplay = 50;
+  const maxDisplay = 30;
 
+  const [recommendedUsers, setRecommendedUsers] = useState([]);
   const [displayUsers, setDisplayUsers] = useState();
   const [maxUsersDisplay, setmaxUsersDisplay] = useState(
     initialMaxUsersDisplay
   );
   const [loading, setLoading] = useState(true);
 
+  // On first load, load recommended users if does not have it
   useEffect(() => {
-    if (!users) {
-      console.log('load all users');
-      props.loadAllUsers();
+    if (
+      currentUser &&
+      currentUser.following &&
+      props.recommendedUsersId.length === 0
+    ) {
+      props.loadRecommendedUsers(
+        currentUser.id,
+        currentUser.following,
+        maxDisplay
+      );
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Update recommended users on rec users id change
   useEffect(() => {
-    if (users) {
-      setLoading(false);
-      updateDisplayUsers(currentUser, users, maxUsersDisplay);
+    if (props.recommendedUsersId && props.recommendedUsersId.length > 0) {
+      const newRecommendedUsers = [];
+      props.recommendedUsersId.forEach((userId) => {
+        const user = users[userId];
+
+        if (!user) {
+          return;
+        }
+
+        newRecommendedUsers.push(user);
+      });
+
+      setRecommendedUsers(newRecommendedUsers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users]);
+  }, [props.recommendedUsersId]);
 
+  // Update display if have any recommended users
   useEffect(() => {
-    if (maxUsersDisplay !== initialMaxUsersDisplay) {
-      updateDisplayUsers(currentUser, users, maxUsersDisplay);
+    if (recommendedUsers.length > 0) {
+      updateDisplayUsers(currentUser, recommendedUsers, maxUsersDisplay);
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recommendedUsers]);
+
+  // Update display on load more users
+  useEffect(() => {
+    if (
+      maxUsersDisplay !== initialMaxUsersDisplay &&
+      recommendedUsers.length > 0
+    ) {
+      updateDisplayUsers(currentUser, recommendedUsers, maxUsersDisplay);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maxUsersDisplay]);
@@ -58,7 +92,7 @@ const Connect = ({ currentUser, users, ...props }) => {
                 {displayUsers.map((user) => (
                   <ProfileCard key={user.id} user={user} />
                 ))}
-                {maxUsersDisplay < users.length &&
+                {maxUsersDisplay < props.recommendedUsersId.length &&
                 maxUsersDisplay < maxDisplay ? (
                   <HighlightCircle
                     className="load-more"
@@ -80,8 +114,8 @@ const Connect = ({ currentUser, users, ...props }) => {
     </FlexContainer>
   );
 
-  function updateDisplayUsers(currentUser, users, max) {
-    const filteredUsers = filterUsers(currentUser, users, max);
+  function updateDisplayUsers(currentUser, recommendedUsers, max) {
+    const filteredUsers = filterUsers(currentUser, recommendedUsers, max);
     setDisplayUsers(filteredUsers);
   }
 
@@ -120,7 +154,8 @@ const mapStateToProps = (state) => {
     currentUser: state.auth.user,
     users: state.users.all,
     loadError: state.users.loadAllError,
+    recommendedUsersId: state.users.recommendedUsersId,
   };
 };
 
-export default connect(mapStateToProps, { loadAllUsers })(Connect);
+export default connect(mapStateToProps, { loadRecommendedUsers })(Connect);
