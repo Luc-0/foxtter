@@ -54,13 +54,13 @@ export default function FweetCard({ fweet, ...props }) {
         </Container>
         <FlexContainer onClick={preventDefault} jc="space-between" pd="0 20px">
           <HighlightCircle title="Reply">
-            <Icon wt="16px" ht="16px" imgUrl="images/reply-icon.png" />
+            <Icon wt="16px" ht="16px" imgUrl="/images/reply-icon.png" />
           </HighlightCircle>
           <HighlightCircle title="Refweet">
-            <Icon wt="16px" ht="16px" imgUrl="images/refweet-icon.png" />
+            <Icon wt="16px" ht="16px" imgUrl="/images/refweet-icon.png" />
           </HighlightCircle>
           <HighlightCircle title="Like">
-            <Icon wt="16px" ht="16px" imgUrl="images/empty-like-icon.png" />
+            <Icon wt="16px" ht="16px" imgUrl="/images/empty-like-icon.png" />
           </HighlightCircle>
         </FlexContainer>
       </FlexContainer>

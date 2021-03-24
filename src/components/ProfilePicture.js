@@ -13,7 +13,9 @@ export default function ProfilePicture(props) {
         wt={props.width ? props.width : '48px'}
         ht={props.height ? props.height : '48px'}
         imgUrl={
-          props.imgUrl ? props.imgUrl : 'images/profile-picture-placeholder.png'
+          props.imgUrl
+            ? props.imgUrl
+            : '/images/profile-picture-placeholder.png'
         }
       />
     </Container>

@@ -18,10 +18,10 @@ export default function Landing() {
       {signupOpen ? <Signup handleClose={closeSignup} /> : null}
       <FlexContainer>
         <Container wt="120%" ht="100%">
-          <BackgroundImage src="images/foxtter-landing-page-background.jfif" />
+          <BackgroundImage src="/images/foxtter-landing-page-background.jfif" />
         </Container>
         <FlexContainer column jc="space-evenly" ai="start" pd="0 20px">
-          <Icon imgUrl="images/foxtter-icon.png"></Icon>
+          <Icon imgUrl="/images/foxtter-icon.png"></Icon>
           <Title size="3.5em">Welcome to Foxtter</Title>
           <Container wt="60%" ht="110px" mg="0 20px">
             <FlexContainer column jc="space-between">

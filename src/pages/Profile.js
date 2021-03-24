@@ -128,7 +128,7 @@ const Profile = ({
                       mg="0 10px"
                       wt="24px"
                       ht="24px"
-                      imgUrl="images/left-arrow-icon.png"
+                      imgUrl="/images/left-arrow-icon.png"
                     />
                   </Link>
                   <FlexContainer
@@ -158,7 +158,7 @@ const Profile = ({
                       src={
                         profileUser.backgroundUrl
                           ? profileUser.backgroundUrl
-                          : 'images/foxtter-landing-page-background.jfif'
+                          : '/images/foxtter-landing-page-background.jfif'
                       }
                     >
                       <Container className="profile-page-picture-container">
@@ -191,7 +191,7 @@ const Profile = ({
                           <Icon
                             wt="16px"
                             ht="16px"
-                            imgUrl="images/messages-icon.png"
+                            imgUrl="/images/messages-icon.png"
                           />
                         </HighlightCircle>
                         <FollowToggle targetUser={profileUser} />

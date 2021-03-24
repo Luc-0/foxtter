@@ -49,7 +49,7 @@ const Login = (props) => {
         mg="0 auto"
         pd="10px 0"
       >
-        <Icon imgUrl="images/foxtter-icon.png" />
+        <Icon imgUrl="/images/foxtter-icon.png" />
         <Text size="2.2em" weight="700" mg="20px 0">
           Log in to Foxtter
         </Text>

@@ -23,7 +23,7 @@ const Navbar = (props) => {
     <NavbarHeader>
       <NavbarContainer column ai="flex-start" jc="flex-start" pd="10px 20px">
         <Link to="/home">
-          <Icon imgUrl="images/foxtter-icon.png" />
+          <Icon imgUrl="/images/foxtter-icon.png" />
         </Link>
         <NavButton
           data-btnid={dataNavButtonId}
@@ -32,7 +32,7 @@ const Navbar = (props) => {
           as={Link}
           to="/home"
         >
-          <Icon wt="24px" ht="24px" imgUrl="images/home-icon.png" />
+          <Icon wt="24px" ht="24px" imgUrl="/images/home-icon.png" />
           <NavText>Home</NavText>
         </NavButton>
         <NavButton
@@ -41,7 +41,7 @@ const Navbar = (props) => {
           as={Link}
           to="/notifications"
         >
-          <Icon wt="24px" ht="24px" imgUrl="images/notifications-icon.png" />
+          <Icon wt="24px" ht="24px" imgUrl="/images/notifications-icon.png" />
           <NavText>Notifications</NavText>
         </NavButton>
         <NavButton
@@ -50,7 +50,7 @@ const Navbar = (props) => {
           as={Link}
           to="/messages"
         >
-          <Icon wt="24px" ht="24px" imgUrl="images/messages-icon.png" />
+          <Icon wt="24px" ht="24px" imgUrl="/images/messages-icon.png" />
           <NavText>Messages</NavText>
         </NavButton>
         <NavButton
@@ -59,7 +59,7 @@ const Navbar = (props) => {
           as={Link}
           to="/connect_people"
         >
-          <Icon wt="24px" ht="24px" imgUrl="images/connect-icon.png" />
+          <Icon wt="24px" ht="24px" imgUrl="/images/connect-icon.png" />
           <NavText>Connect</NavText>
         </NavButton>
         <NavButton
@@ -73,7 +73,7 @@ const Navbar = (props) => {
             },
           }}
         >
-          <Icon wt="24px" ht="24px" imgUrl="images/profile-icon.png" />
+          <Icon wt="24px" ht="24px" imgUrl="/images/profile-icon.png" />
           <NavText>Profile</NavText>
         </NavButton>
 
@@ -90,7 +90,7 @@ const Navbar = (props) => {
             <LightText mg="5px 15px 0">@{props.user.username}</LightText>
           </Container>
           <NavButton onClick={props.signOut} mg="0 0 0 auto">
-            <Icon wt="24px" ht="24px" imgUrl="images/logout-icon.png" />
+            <Icon wt="24px" ht="24px" imgUrl="/images/logout-icon.png" />
           </NavButton>
         </FlexContainer>
       </NavbarContainer>
