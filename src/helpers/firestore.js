@@ -155,9 +155,37 @@ export async function unfollow(currentUserId, targetId) {
   });
 }
 
+export async function getUserFweets(userId) {
+  try {
+    const userFweetsRef = firestore()
+      .collection('users')
+      .doc(userId)
+      .collection('fweets');
+
+    const userFweetsRes = await userFweetsRef.get();
+    if (userFweetsRes.empty) {
+      return {};
+    }
+
+    const userFweets = {};
+
+    userFweetsRes.docs.forEach((doc) => {
+      userFweets[doc.id] = doc.data();
+    });
+
+    return userFweets;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function loadUsers(ids = []) {
   if (!Array.isArray(ids)) {
     return Promise.reject('Not an array');
+  }
+
+  if (ids.length === 0) {
+    return [];
   }
 
   const usersRef = firestore().collection('users').where('id', 'in', ids);
