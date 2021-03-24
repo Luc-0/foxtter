@@ -69,7 +69,7 @@ const Navbar = (props) => {
           to={{
             pathname: `/${props.user.username}`,
             state: {
-              profileUser: props.user,
+              profileUserId: props.user.id,
             },
           }}
         >

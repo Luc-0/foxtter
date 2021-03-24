@@ -12,7 +12,7 @@ export default function ProfileCard({ user }) {
       to={{
         pathname: `${user ? user.username : '/home'}`,
         state: {
-          profileUser: user,
+          profileUserId: user ? user.id : undefined,
         },
       }}
       className="profile-card"
