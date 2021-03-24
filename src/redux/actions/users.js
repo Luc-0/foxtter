@@ -1,7 +1,13 @@
-import { LOAD_USERS, SAVE_RECOMMENDED_USERS_ID } from './actionTypes';
+import {
+  LOAD_USERS,
+  SAVE_RECOMMENDED_USERS_ID,
+  UPDATE_USER_FWEETS,
+  UPDATE_USER_FWEETS_SUCCESS,
+} from './actionTypes';
 import {
   loadUsers as firestoreLoadUsers,
   getRecommendedUsers,
+  getUserFweets,
 } from '../../helpers/firestore';
 
 const saveRecommendedUsersId = (recommmendedUsersId) => {
@@ -47,6 +53,38 @@ export function loadUsers(userIds) {
       .catch((error) => {
         // TODO: Dispatch error
         console.log('error loading users', error.message);
+      });
+  };
+}
+
+const saveUserFweets = (userId, userFweets) => {
+  return {
+    type: UPDATE_USER_FWEETS,
+    payload: {
+      id: userId,
+      fweets: userFweets,
+    },
+  };
+};
+
+const updateUserFweetsSuccess = (userId) => {
+  return {
+    type: UPDATE_USER_FWEETS_SUCCESS,
+    payload: {
+      userId: userId,
+    },
+  };
+};
+
+export function updateUserFweets(userId) {
+  return (dispatch) => {
+    getUserFweets(userId)
+      .then((userFweets) => {
+        dispatch(saveUserFweets(userId, userFweets));
+        dispatch(updateUserFweetsSuccess(userId));
+      })
+      .catch((error) => {
+        console.log('update user fweets error', error);
       });
   };
 }

@@ -8,4 +8,4 @@ export {
   unfollow,
   addFweet,
 } from './auth';
-export { loadUsers, loadRecommendedUsers } from './users';
+export { loadUsers, loadRecommendedUsers, updateUserFweets } from './users';

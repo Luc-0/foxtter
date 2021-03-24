@@ -19,27 +19,106 @@ import {
 } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { updateUserFweets } from '../redux/actions';
+
+import fweet from '../helpers/fweet';
 
 import ProfilePicture from '../components/ProfilePicture';
 import TabList from '../components/TabList';
 import FollowToggle from '../components/FollowToggle';
+import Fweets from '../components/Fweets';
 
-const Profile = ({ currentUser, ...props }) => {
-  const location = useLocation();
+const Profile = ({
+  location = { state: { profileUserId: undefined } },
+  currentUser,
+  ...props
+}) => {
+  const routerLocation = useLocation();
   const [profileUser, setProfileUser] = useState();
+  const [profileFweets, setProfileFweets] = useState();
+  const [isLoadingFweets, setIsLoadingFweets] = useState(true);
 
   useEffect(() => {
     // Get profile user from link state
-    setProfileUser(props.location.state.profileUser);
+    if (location.state.profileUserId) {
+      const profileUserId = location.state.profileUserId;
+
+      if (profileUserId === currentUser.id) {
+        setProfileUser(currentUser);
+        setIsLoadingFweets(true);
+        return;
+      }
+
+      const user = props.allUsers[profileUserId];
+      setProfileUser(user);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.state.profileUserId]);
+
+  // On page load, load profile user fweets
+  useEffect(() => {
+    if (profileUser) {
+      if (isLoadingFweets) {
+        props.updateUserFweets(profileUser.id);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileUser]);
+
+  useEffect(() => {
+    if (
+      props.updateFweetsSucess &&
+      profileUser &&
+      props.updateFweetsSucess.userId === profileUser.id
+    ) {
+      setIsLoadingFweets(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.updateFweetsSucess]);
+
+  useEffect(() => {
+    if (!isLoadingFweets) {
+      const user = props.allUsers[profileUser.id];
+      if (!user) {
+        return;
+      }
+
+      const userFweets = user.fweets;
+
+      if (!userFweets || Object.keys(userFweets).length === 0) {
+        return;
+      }
+
+      const fweetsId = Object.keys(userFweets);
+      const displayFweets = [];
+      fweetsId.forEach((fweetId) => {
+        const userFweet = userFweets[fweetId];
+        const newFweet = fweet(
+          user.id,
+          user.name,
+          user.username,
+          user.pictureUrl,
+          fweetId,
+          userFweet.text,
+          userFweet.dateCreated,
+          userFweet.refweets,
+          userFweet.replies
+        );
+
+        displayFweets.push(newFweet);
+      });
+
+      setProfileFweets(displayFweets);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingFweets]);
 
   return (
     <div>
       <Switch>
         <Route
           exact
-          path={location.pathname}
+          path={routerLocation.pathname}
           render={() => {
             return profileUser ? (
               <FlexContainer className="page-container">
@@ -62,7 +141,10 @@ const Profile = ({ currentUser, ...props }) => {
                       {profileUser ? profileUser.name : 'Foxtter'}
                     </Span>
                     <LightText size="0.8em">
-                      {profileUser ? profileUser.fweets.length : '0'} Fweets
+                      {profileUser && profileFweets
+                        ? profileFweets.length
+                        : '0'}{' '}
+                      Fweets
                     </LightText>
                   </FlexContainer>
                 </FlexContainer>
@@ -144,14 +226,17 @@ const Profile = ({ currentUser, ...props }) => {
 
                     <FlexContainer jc="flex-start" mg="15px 0">
                       <FlexContainer wt="auto">
-                        <Text as={Link} to={`${location.pathname}/following`}>
+                        <Text
+                          as={Link}
+                          to={`${routerLocation.pathname}/following`}
+                        >
                           {profileUser ? profileUser.following.length : '0'}{' '}
                           Following
                         </Text>
                         <Text
                           mg="0 10px"
                           as={Link}
-                          to={`${location.pathname}/followers`}
+                          to={`${routerLocation.pathname}/followers`}
                         >
                           {profileUser ? profileUser.followers.length : '0'}{' '}
                           Followers
@@ -165,31 +250,48 @@ const Profile = ({ currentUser, ...props }) => {
                       items={[
                         {
                           text: 'Fweets',
-                          to: `${location.pathname}`,
+                          to: `${routerLocation.pathname}`,
                           selected: true,
                         },
                         {
                           text: 'Fweets & Replies',
-                          to: `${location.pathname}/with_replies`,
+                          to: `${routerLocation.pathname}/with_replies`,
                         },
-                        { text: 'Likes', to: `${location.pathname}/likes` },
+                        {
+                          text: 'Likes',
+                          to: `${routerLocation.pathname}/likes`,
+                        },
                       ]}
                     />
                     <FlexContainer>
                       <Switch>
                         <Route
                           exact
-                          path={`${location.pathname}`}
-                          component={() => <div>Fweets</div>}
+                          path={`${routerLocation.pathname}`}
+                          component={() => (
+                            <FlexContainer mg="10px 0" column>
+                              {isLoadingFweets ? (
+                                <div>Loading fweets</div>
+                              ) : (
+                                <FlexContainer>
+                                  {profileFweets ? (
+                                    <Fweets fweets={profileFweets} />
+                                  ) : (
+                                    <div>No fweets yet.</div>
+                                  )}
+                                </FlexContainer>
+                              )}
+                            </FlexContainer>
+                          )}
                         />
                         <Route
                           exact
-                          path={`${location.pathname}/with_replies`}
+                          path={`${routerLocation.pathname}/with_replies`}
                           component={() => <div>Fweets replies</div>}
                         />
                         <Route
                           exact
-                          path={`${location.pathname}/likes`}
+                          path={`${routerLocation.pathname}/likes`}
                           component={() => <div>No likes yet</div>}
                         />
                       </Switch>
@@ -202,12 +304,12 @@ const Profile = ({ currentUser, ...props }) => {
         />
         <Route
           exact
-          path={`${location.pathname}/following`}
+          path={`${routerLocation.pathname}/following`}
           component={() => <div>following</div>}
         />
         <Route
           exact
-          path={`${location.pathname}/followers`}
+          path={`${routerLocation.pathname}/followers`}
           component={() => <div>followers</div>}
         />
       </Switch>
@@ -218,7 +320,9 @@ const Profile = ({ currentUser, ...props }) => {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.auth.user,
+    allUsers: state.users.all,
+    updateFweetsSucess: state.users.updateFweetsSuccess,
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, { updateUserFweets })(Profile);
