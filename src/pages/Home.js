@@ -6,8 +6,8 @@ import fweet from '../helpers/fweet';
 
 import { HomeContainer, Container } from '../components/StyledComponents';
 import Fweet from '../components/Fweet';
-import FweetCard from '../components/FweetCard';
 import PageName from '../components/PageName';
+import Fweets from '../components/Fweets';
 
 const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
   const [displayFweets, setDisplayFweets] = useState([]);
@@ -54,15 +54,8 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
         <Fweet />
       </Container>
       <Container className="space-container" />
-      <Container className="fweets-container">
-        {displayFweets ? (
-          displayFweets.map((fweet) => (
-            <FweetCard key={fweet.id} fweet={fweet} />
-          ))
-        ) : (
-          <div>Loading</div>
-        )}
-      </Container>
+
+      {displayFweets ? <Fweets fweets={displayFweets} /> : <div>Loading</div>}
     </HomeContainer>
   );
 
