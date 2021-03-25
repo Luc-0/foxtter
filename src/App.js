@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import { Container, FlexContainer } from './components/StyledComponents';
 import ProfileCard from './components/ProfileCard';
 import Connect from './pages/Connect';
+import Fweet from './pages/Fweet';
 
 function App(props) {
   useEffect(() => {
@@ -77,6 +78,12 @@ function App(props) {
                   exact
                   path="/:id"
                   component={Profile}
+                />
+                <PrivateRoute
+                  authenticated={props.authenticated}
+                  exact
+                  path="/:id/status/:id"
+                  component={Fweet}
                 />
               </Switch>
               <Container bgc="rgb(235, 238, 240)" wt="100%">

@@ -310,6 +310,11 @@ const HighlightCircle = styled.div`
   &.load-more {
     cursor: pointer;
   }
+
+  &.fweet {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const TabItem = styled.div`
@@ -375,6 +380,13 @@ const WrongBox = styled.div`
   color: ${COLORS.invalidText};
 `;
 
+const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  border: 1px solid ${COLORS.borderColor};
+  margin: ${(props) => (props.mg ? props.mg : '0')};
+`;
+
 export {
   Button,
   Container,
@@ -398,4 +410,5 @@ export {
   AlertMessage,
   WrongBox,
   NavbarHeader,
+  Line,
 };
