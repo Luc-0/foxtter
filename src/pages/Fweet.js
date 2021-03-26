@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { listenFweetUpdate } from '../helpers/firestore';
+import { updateFweet } from '../redux/actions';
 
 import {
   Container,
@@ -20,9 +24,43 @@ const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
 
   useEffect(() => {
     if (location.state.fweet) {
-      setFweet(location.state.fweet);
+      const locationFweet = location.state.fweet;
+      setFweet(locationFweet);
+
+      let unsub;
+      try {
+        unsub = listenFweetUpdate(
+          locationFweet.user.id,
+          locationFweet.id,
+          props.updateFweet
+        );
+      } catch (error) {
+        console.log(error);
+      }
+
+      return function cleanup() {
+        if (unsub) {
+          unsub();
+        }
+      };
     }
+    // eslint-disable-next-line
   }, [location.state.fweet]);
+
+  useEffect(() => {
+    if (props.all && fweet) {
+      const user = props.all[fweet.user.id];
+      const updatedFweet = user.fweets[fweet.id];
+
+      if (!user || !updatedFweet) {
+        return;
+      }
+
+      const newFweet = { ...fweet, ...updatedFweet };
+      setFweet(newFweet);
+    }
+    // eslint-disable-next-line
+  }, [props.all]);
 
   useEffect(() => {
     if (fweet) {
@@ -100,7 +138,7 @@ const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
                 fweet.refweets ? fweet.refweets.length : 0,
                 'Refweets'
               )}
-              {FweetStatus(0, 'Likes')}
+              {FweetStatus(fweet.likes ? fweet.likes : 0, 'Likes')}
             </FlexContainer>
             <Line mg="20px 0 10px" />
 
@@ -164,4 +202,10 @@ const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
   }
 };
 
-export default Fweet;
+const mapStateToProps = (state) => {
+  return {
+    all: state.users.all,
+  };
+};
+
+export default connect(mapStateToProps, { updateFweet })(Fweet);

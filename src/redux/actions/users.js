@@ -3,6 +3,7 @@ import {
   SAVE_RECOMMENDED_USERS_ID,
   UPDATE_USER_FWEETS,
   UPDATE_USER_FWEETS_SUCCESS,
+  UPDATE_USER_FWEET,
 } from './actionTypes';
 import {
   loadUsers as firestoreLoadUsers,
@@ -86,5 +87,18 @@ export function updateUserFweets(userId) {
       .catch((error) => {
         console.log('update user fweets error', error);
       });
+  };
+}
+
+export function updateFweet(userId, fweetId, fweetData) {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_USER_FWEET,
+      payload: {
+        userId: userId,
+        fweetId: fweetId,
+        fweetData: fweetData,
+      },
+    });
   };
 }

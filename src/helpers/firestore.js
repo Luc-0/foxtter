@@ -179,6 +179,23 @@ export async function getUserFweets(userId) {
   }
 }
 
+export function listenFweetUpdate(userId, fweetId, updateCall) {
+  const fweetRef = firestore()
+    .collection('users')
+    .doc(userId)
+    .collection('fweets')
+    .doc(fweetId);
+
+  return fweetRef.onSnapshot((snapshot) => {
+    if (!snapshot.exists) {
+      return;
+    }
+
+    const fweetData = snapshot.data();
+    updateCall(userId, fweetId, fweetData);
+  });
+}
+
 export async function loadUsers(ids = []) {
   if (!Array.isArray(ids)) {
     return Promise.reject('Not an array');
