@@ -170,7 +170,7 @@ export async function getUserFweets(userId) {
     const userFweets = {};
 
     userFweetsRes.docs.forEach((doc) => {
-      userFweets[doc.id] = doc.data();
+      userFweets[doc.id] = { id: doc.id, ...doc.data() };
     });
 
     return userFweets;
