@@ -7,6 +7,8 @@ export {
   follow,
   unfollow,
   addFweet,
+  like,
+  unlike,
 } from './auth';
 export {
   loadUsers,

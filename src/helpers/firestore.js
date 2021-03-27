@@ -263,3 +263,49 @@ export async function loadUsers(ids = []) {
 export function timestamp() {
   return firestore.Timestamp;
 }
+
+export async function like(userId, targetUserId, targetFweetId, likeId) {
+  const userRef = firestore().collection('users').doc(userId);
+  const targetFweetRef = firestore()
+    .collection('users')
+    .doc(targetUserId)
+    .collection('fweets')
+    .doc(targetFweetId);
+
+  try {
+    const updateUser = await userRef.update({
+      likes: firestore.FieldValue.arrayUnion(likeId),
+    });
+    const updateTargetFweet = await targetFweetRef.update({
+      likes: firestore.FieldValue.increment(1),
+    });
+
+    return Promise.all([updateUser, updateTargetFweet]);
+  } catch (error) {
+    console.log('error firestore liking', error.message);
+    throw error;
+  }
+}
+
+export async function unlike(userId, targetUserId, targetFweetId, likeId) {
+  const userRef = firestore().collection('users').doc(userId);
+  const targetFweetRef = firestore()
+    .collection('users')
+    .doc(targetUserId)
+    .collection('fweets')
+    .doc(targetFweetId);
+
+  try {
+    const updateUser = await userRef.update({
+      likes: firestore.FieldValue.arrayRemove(likeId),
+    });
+    const updateTargetFweet = await targetFweetRef.update({
+      likes: firestore.FieldValue.increment(-1),
+    });
+
+    return Promise.all([updateUser, updateTargetFweet]);
+  } catch (error) {
+    console.log('error firestore liking', error.message);
+    throw error;
+  }
+}

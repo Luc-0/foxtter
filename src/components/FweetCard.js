@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { timestamp } from '../helpers/firestore';
+import LikeToggle from './LikeToggle';
 
 import ProfilePicture from './ProfilePicture';
 import {
@@ -59,9 +60,7 @@ export default function FweetCard({ fweet, ...props }) {
           <HighlightCircle title="Refweet">
             <Icon wt="16px" ht="16px" imgUrl="/images/refweet-icon.png" />
           </HighlightCircle>
-          <HighlightCircle title="Like">
-            <Icon wt="16px" ht="16px" imgUrl="/images/empty-like-icon.png" />
-          </HighlightCircle>
+          <LikeToggle targetFweet={fweet} iconClass="fweet-card" />
         </FlexContainer>
       </FlexContainer>
     </FlexContainer>

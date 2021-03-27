@@ -7,6 +7,8 @@ import {
   FOLLOW,
   UNFOLLOW,
   ADD_FWEET,
+  LIKE,
+  UNLIKE,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -58,6 +60,32 @@ const auth = (state = initialState, action) => {
           fweets: [...state.user.fweets, action.payload.fweet],
         },
       });
+    case LIKE: {
+      const likeId = action.payload.likeId;
+
+      if (state.user.likes.includes(likeId)) {
+        return state;
+      }
+
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          likes: [...state.user.likes, likeId],
+        },
+      });
+    }
+    case UNLIKE: {
+      const likeId = action.payload.likeId;
+
+      const newLikes = state.user.likes.filter((id) => id !== likeId);
+
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          likes: newLikes,
+        },
+      });
+    }
     default:
       return state;
   }

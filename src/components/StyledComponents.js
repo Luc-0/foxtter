@@ -245,6 +245,20 @@ const Icon = styled(BackgroundImage)`
   background-image: url(${(props) => props.imgUrl});
   margin: ${(props) => (props.mg ? props.mg : '0')};
   pointer-events: none;
+
+  &.fweet {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  &.fweet-card {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+  }
 `;
 
 const Input = styled.input`

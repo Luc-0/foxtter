@@ -15,9 +15,14 @@ import {
   Line,
   HighlightCircle,
 } from '../components/StyledComponents';
+import LikeToggle from '../components/LikeToggle';
 import ProfilePicture from '../components/ProfilePicture';
 
-const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
+const Fweet = ({
+  location = { state: { fweet: undefined } },
+  currentUser,
+  ...props
+}) => {
   const [fweet, setFweet] = useState();
   const [hour, setHour] = useState();
   const [date, setDate] = useState();
@@ -149,13 +154,11 @@ const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
               <HighlightCircle title="Refweet" className="fweet">
                 <Icon wt="24px" ht="24px" imgUrl="/images/refweet-icon.png" />
               </HighlightCircle>
-              <HighlightCircle title="Like" className="fweet">
-                <Icon
-                  wt="24px"
-                  ht="24px"
-                  imgUrl="/images/empty-like-icon.png"
-                />
-              </HighlightCircle>
+              <LikeToggle
+                targetFweet={fweet}
+                circleClass="fweet"
+                iconClass="fweet"
+              />
             </FlexContainer>
           </FlexContainer>
           <Container className="space-container" />
@@ -204,6 +207,7 @@ const Fweet = ({ location = { state: { fweet: undefined } }, ...props }) => {
 
 const mapStateToProps = (state) => {
   return {
+    currentUser: state.auth.user,
     all: state.users.all,
   };
 };

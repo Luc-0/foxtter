@@ -7,6 +7,8 @@ import {
   FOLLOW,
   UNFOLLOW,
   ADD_FWEET,
+  LIKE,
+  UNLIKE,
 } from './actionTypes';
 import {
   signup as signupHelper,
@@ -166,5 +168,23 @@ export function addFweet(currentUser, fweetContent) {
       .catch((error) => {
         console.log('create fweet error', error.message);
       });
+  };
+}
+
+export function like(likeId) {
+  return {
+    type: LIKE,
+    payload: {
+      likeId: likeId,
+    },
+  };
+}
+
+export function unlike(likeId) {
+  return {
+    type: UNLIKE,
+    payload: {
+      likeId,
+    },
   };
 }

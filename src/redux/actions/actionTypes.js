@@ -7,6 +7,8 @@ export const CLEAR_LOGIN_ERROR = 'CLEAR_LOGIN_ERROR';
 export const FOLLOW = 'FOLLOW';
 export const UNFOLLOW = 'UNFOLLOW';
 export const ADD_FWEET = 'ADD_FWEET';
+export const LIKE = 'LIKE';
+export const UNLIKE = 'UNLIKE';
 
 // users
 export const LOAD_USERS = 'LOAD_USERS';
