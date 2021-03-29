@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { timestamp } from '../helpers/firestore';
-import LikeToggle from './LikeToggle';
+import { formatCardDate } from '../helpers/date';
 
+import LikeToggle from './LikeToggle';
 import ProfilePicture from './ProfilePicture';
 import {
   Container,
@@ -48,7 +48,7 @@ export default function FweetCard({ fweet, ...props }) {
           </Text>
           <LightText>{`@${fweet.user.username}` || '@username'}</LightText>
           <LightText mg="0 10px">·</LightText>
-          <LightText>{formatDate(fweet.dateCreated) || '01m'}</LightText>
+          <LightText>{formatCardDate(fweet.dateCreated) || '01m'}</LightText>
         </FlexContainer>
         <Container pd="10px">
           <Text className="fweet-text">{fweet.text || 'text'}</Text>
@@ -68,37 +68,5 @@ export default function FweetCard({ fweet, ...props }) {
 
   function preventDefault(e) {
     e.preventDefault();
-  }
-
-  function formatDate(fromDate) {
-    if (!fromDate || !fromDate.seconds) {
-      return;
-    }
-
-    const Timestamp = timestamp();
-
-    const seconds = Math.round(Timestamp.now().seconds - fromDate.seconds);
-
-    if (seconds < 60) {
-      return `${seconds % 60}s`;
-    }
-
-    const minutes = Math.round(seconds / 60);
-
-    if (minutes < 60) {
-      return `${minutes}m`;
-    }
-
-    const hours = Math.round(minutes / 60);
-
-    if (hours < 24) {
-      return `${hours}h`;
-    }
-
-    const date = new Date(Timestamp.now().toDate());
-    const browserLanguage = navigator.language;
-    const displayDate = date.toLocaleDateString(browserLanguage);
-
-    return displayDate;
   }
 }
