@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { listenFweetUpdate } from '../helpers/firestore';
 import { updateFweet } from '../redux/actions';
 
+import reply from '../helpers/reply';
+
 import {
   Container,
   FlexContainer,
@@ -17,6 +19,7 @@ import {
 } from '../components/StyledComponents';
 import LikeToggle from '../components/LikeToggle';
 import ProfilePicture from '../components/ProfilePicture';
+import Reply from '../components/Reply';
 
 const Fweet = ({
   location = { state: { fweet: undefined } },
@@ -26,6 +29,8 @@ const Fweet = ({
   const [fweet, setFweet] = useState();
   const [hour, setHour] = useState();
   const [date, setDate] = useState();
+  const [currentReply, setCurrentReply] = useState();
+  const [openReply, setOpenReply] = useState(false);
 
   useEffect(() => {
     if (location.state.fweet) {
@@ -76,7 +81,10 @@ const Fweet = ({
   return (
     <div>
       {fweet ? (
-        <FlexContainer className="page-container">
+        <FlexContainer className="page-container relative">
+          {openReply && currentReply ? (
+            <Reply reply={currentReply} close={handleCloseReply} />
+          ) : null}
           <FlexContainer className="page-name-container">
             <Link to="/home">
               <Icon
@@ -148,7 +156,11 @@ const Fweet = ({
             <Line mg="20px 0 10px" />
 
             <FlexContainer jc="space-between">
-              <HighlightCircle title="Reply" className="fweet">
+              <HighlightCircle
+                onClick={handleFweetReply}
+                title="Reply"
+                className="fweet"
+              >
                 <Icon wt="24px" ht="24px" imgUrl="/images/reply-icon.png" />
               </HighlightCircle>
               <HighlightCircle title="Refweet" className="fweet">
@@ -168,6 +180,38 @@ const Fweet = ({
       )}
     </div>
   );
+
+  function handleCloseReply() {
+    setOpenReply(false);
+    setCurrentReply(undefined);
+  }
+
+  function handleOpenReply(reply) {
+    setOpenReply(true);
+    setCurrentReply(reply);
+  }
+
+  function handleFweetReply() {
+    const replyId = fweet.id;
+    const userId = fweet.user.id;
+    const name = fweet.user.name;
+    const username = fweet.user.username;
+    const pictureUrl = fweet.user.pictureUrl;
+    const text = fweet.text;
+    const dateCreated = fweet.dateCreated;
+
+    const fweetReply = reply(
+      replyId,
+      userId,
+      name,
+      username,
+      pictureUrl,
+      text,
+      dateCreated
+    );
+
+    handleOpenReply(fweetReply);
+  }
 
   function updateTime(createdDate) {
     if (!createdDate) {

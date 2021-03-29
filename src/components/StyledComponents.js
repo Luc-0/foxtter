@@ -155,6 +155,24 @@ const Container = styled.div`
     border-bottom: 1px solid ${COLORS.borderColor};
     cursor: pointer;
   }
+
+  &.reply {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+
+    width: 90%;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid ${COLORS.spaceContainer};
+    box-shadow: ${COLORS.primaryShadow} 0 0 10px;
+    border-radius: 20px;
+    padding: 1%;
+  }
+
+  &.relative {
+    position: relative;
+  }
 `;
 
 const FlexContainer = styled(Container)`
@@ -221,10 +239,15 @@ const Text = styled.span`
   color: ${(props) => (props.color ? COLORS.white : COLORS.black)};
   margin: ${(props) => (props.mg ? props.mg : '0')};
   padding: ${(props) => (props.pd ? props.pd : '0')};
+  line-height: 1.1em;
 
   &.fweet-text {
     line-height: 1.3em;
     word-wrap: break-word;
+  }
+
+  &.break-anywhere {
+    word-wrap: anywhere;
   }
 `;
 
@@ -401,6 +424,18 @@ const Line = styled.div`
   margin: ${(props) => (props.mg ? props.mg : '0')};
 `;
 
+const StyledSvg = styled.svg`
+  & line {
+    stroke: ${COLORS.lightGray};
+    stroke-width: 2;
+  }
+
+  &.reply {
+    width: 100px;
+    height: 50px;
+  }
+`;
+
 export {
   Button,
   Container,
@@ -425,4 +460,5 @@ export {
   WrongBox,
   NavbarHeader,
   Line,
+  StyledSvg,
 };
