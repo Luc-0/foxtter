@@ -10,6 +10,8 @@ import {
   LightText,
   StyledSvg,
   Span,
+  HighlightCircle,
+  Icon,
 } from './StyledComponents';
 
 function ReplyCard({ reply, to, ...props }) {
@@ -57,6 +59,19 @@ function ReplyCard({ reply, to, ...props }) {
               </Container>
             </FlexContainer>
           </FlexContainer>
+          {props.hideReplyBtn ? null : (
+            <FlexContainer>
+              <HighlightCircle
+                onClick={() => {
+                  props.handleReply(reply);
+                }}
+                title="Reply"
+                className="fweet"
+              >
+                <Icon wt="24px" ht="24px" imgUrl="/images/reply-icon.png" />
+              </HighlightCircle>
+            </FlexContainer>
+          )}
         </FlexContainer>
       ) : null}
     </Container>

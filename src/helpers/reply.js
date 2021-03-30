@@ -5,7 +5,8 @@ export default function reply(
   username,
   pictureUrl,
   text,
-  dateCreated
+  dateCreated,
+  to = null
 ) {
   return {
     fweetId,
@@ -15,5 +16,6 @@ export default function reply(
     pictureUrl,
     text,
     dateCreated,
+    to,
   };
 }

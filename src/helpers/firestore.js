@@ -312,7 +312,7 @@ export async function unlike(userId, targetUserId, targetFweetId, likeId) {
 
 export async function reply(
   currentUserId,
-  targetId,
+  fweetUserId,
   fweetId,
   reply,
   replyTo = null
@@ -321,49 +321,59 @@ export async function reply(
     const currentUserRef = firestore().collection('users').doc(currentUserId);
     const fweetRef = firestore()
       .collection('users')
-      .doc(targetId)
+      .doc(fweetUserId)
       .collection('fweets')
       .doc(fweetId);
 
+    const timestampNow = timestamp().now();
+    let replyId = '';
+    let newReply = {};
+
     if (!replyTo) {
-      const timestampNow = timestamp().now();
-      const replyId =
-        targetId + fweetId + currentUserId + timestampNow.nanoseconds;
-      const newReply = {
-        id: replyId,
-        userId: targetId,
-        name: reply.name,
-        username: reply.username,
-        text: reply.text,
-        dateCreated: timestampNow.toDate(),
+      replyId +=
+        fweetUserId + fweetId + currentUserId + timestampNow.nanoseconds;
+    } else {
+      replyId += replyTo.parentId + currentUserId + timestampNow.nanoseconds;
+      newReply.to = {
+        parentId: replyTo.parentId,
+        userId: replyTo.userId,
+        username: replyTo.username,
       };
-
-      const currentUserReply = {
-        id: replyId,
-        fweetId: fweetId,
-        userId: currentUserId,
-      };
-
-      const addUserReply = await currentUserRef.set(
-        {
-          replies: firestore.FieldValue.arrayUnion(currentUserReply),
-        },
-        {
-          merge: true,
-        }
-      );
-
-      const addFweetReply = await fweetRef.set(
-        {
-          replies: firestore.FieldValue.arrayUnion(newReply),
-        },
-        { merge: true }
-      );
-
-      return Promise.all([addUserReply, addFweetReply]);
     }
 
-    throw Error('nope');
+    newReply = {
+      ...newReply,
+      id: replyId,
+      userId: currentUserId,
+      name: reply.name,
+      username: reply.username,
+      text: reply.text,
+      dateCreated: timestampNow.toDate(),
+    };
+
+    const currentUserReply = {
+      id: replyId,
+      fweetId: fweetId,
+      fweetUserId: fweetUserId,
+    };
+
+    const addUserReply = await currentUserRef.set(
+      {
+        replies: firestore.FieldValue.arrayUnion(currentUserReply),
+      },
+      {
+        merge: true,
+      }
+    );
+
+    const addFweetReply = await fweetRef.set(
+      {
+        replies: firestore.FieldValue.arrayUnion(newReply),
+      },
+      { merge: true }
+    );
+
+    return Promise.all([addUserReply, addFweetReply]);
   } catch (error) {
     console.log('Error replying', error);
   }

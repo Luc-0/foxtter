@@ -25,7 +25,7 @@ function Reply({ currentUser, reply, close, ...props }) {
           <Text mg="10px 0">Replying to @{reply.username || 'username'}</Text>
         </FlexContainer>
 
-        <ReplyCard reply={reply} />
+        <ReplyCard reply={reply} hideReplyBtn={true} />
       </FlexContainer>
       <FlexContainer jc="flex-end">
         <Textarea
@@ -60,7 +60,8 @@ function Reply({ currentUser, reply, close, ...props }) {
       currentUser.id,
       reply.fweetUserId,
       reply.fweetId,
-      newReply
+      newReply,
+      reply.to ? reply.to : null
     );
     close();
   }

@@ -178,7 +178,13 @@ const Fweet = ({
           <FlexContainer column>
             {fweet.replies
               ? fweet.replies.map((reply) => {
-                  return <ReplyCard reply={reply} />;
+                  return (
+                    <ReplyCard
+                      handleReply={handleReply}
+                      reply={reply}
+                      to={reply.to ? reply.to : null}
+                    />
+                  );
                 })
               : null}
           </FlexContainer>
@@ -197,6 +203,35 @@ const Fweet = ({
   function handleOpenReply(reply) {
     setOpenReply(true);
     setCurrentReply(reply);
+  }
+
+  function handleReply(targetReply) {
+    const fweetId = fweet.id;
+    const fweetUserId = fweet.user.id;
+    const name = targetReply.name;
+    const username = targetReply.username;
+    const replyUserId = targetReply.userId;
+    const pictureUrl = '';
+    const text = targetReply.text;
+    const dateCreated = targetReply.dateCreated;
+    const to = {
+      parentId: targetReply.id,
+      userId: replyUserId,
+      username: username,
+    };
+
+    const replyCard = reply(
+      fweetId,
+      fweetUserId,
+      name,
+      username,
+      pictureUrl,
+      text,
+      dateCreated,
+      to
+    );
+
+    handleOpenReply(replyCard);
   }
 
   function handleFweetReply() {
