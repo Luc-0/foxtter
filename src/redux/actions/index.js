@@ -9,6 +9,7 @@ export {
   addFweet,
   like,
   unlike,
+  reply,
 } from './auth';
 export {
   loadUsers,

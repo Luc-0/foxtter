@@ -375,6 +375,6 @@ export async function reply(
 
     return Promise.all([addUserReply, addFweetReply]);
   } catch (error) {
-    console.log('Error replying', error);
+    throw error;
   }
 }

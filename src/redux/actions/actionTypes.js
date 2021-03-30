@@ -9,6 +9,7 @@ export const UNFOLLOW = 'UNFOLLOW';
 export const ADD_FWEET = 'ADD_FWEET';
 export const LIKE = 'LIKE';
 export const UNLIKE = 'UNLIKE';
+export const REPLY_ERROR = 'REPLY_ERROR';
 
 // users
 export const LOAD_USERS = 'LOAD_USERS';

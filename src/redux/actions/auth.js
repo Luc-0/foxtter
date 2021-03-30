@@ -9,6 +9,7 @@ import {
   ADD_FWEET,
   LIKE,
   UNLIKE,
+  REPLY_ERROR,
 } from './actionTypes';
 import {
   signup as signupHelper,
@@ -19,6 +20,7 @@ import {
   createNewUserDoc,
   getUserById,
   createFweet,
+  reply as firestoreReply,
 } from '../../helpers/firestore';
 import fweet from '../../helpers/fweet';
 
@@ -186,5 +188,28 @@ export function unlike(likeId) {
     payload: {
       likeId,
     },
+  };
+}
+
+const replyError = (error) => {
+  return {
+    type: REPLY_ERROR,
+    payload: {
+      error,
+    },
+  };
+};
+
+export function reply(currUserId, targetId, fweetId, reply, replyTo = null) {
+  return (dispatch) => {
+    firestoreReply(
+      currUserId,
+      targetId,
+      fweetId,
+      reply,
+      replyTo ? replyTo : ''
+    ).catch((error) => {
+      dispatch(replyError(error));
+    });
   };
 }

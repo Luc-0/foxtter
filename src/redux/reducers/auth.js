@@ -9,6 +9,7 @@ import {
   ADD_FWEET,
   LIKE,
   UNLIKE,
+  REPLY_ERROR,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -17,6 +18,7 @@ const initialState = {
   user: {},
   signupError: null,
   loginError: null,
+  replyError: null,
 };
 
 const auth = (state = initialState, action) => {
@@ -84,6 +86,14 @@ const auth = (state = initialState, action) => {
           ...state.user,
           likes: newLikes,
         },
+      });
+    }
+
+    case REPLY_ERROR: {
+      const error = action.payload.error;
+
+      return updateObject(state, {
+        replyError: error,
       });
     }
     default:
