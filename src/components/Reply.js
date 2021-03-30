@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
 import ReplyCard from './ReplyCard';
 import {
   Button,
@@ -8,7 +10,11 @@ import {
   Textarea,
 } from './StyledComponents';
 
-function Reply({ reply, close }) {
+import { reply as replyActionCreator } from '../redux/actions';
+
+function Reply({ currentUser, reply, close, ...props }) {
+  const [replyText, setReplyText] = useState('');
+
   return (
     <FlexContainer className="reply" column>
       <FlexContainer ai="flex-start" column>
@@ -22,13 +28,48 @@ function Reply({ reply, close }) {
         <ReplyCard reply={reply} />
       </FlexContainer>
       <FlexContainer jc="flex-end">
-        <Textarea placeholder="Fweet your reply" />
-        <Button mg="10px" wt="auto" primary>
-          Fweet
+        <Textarea
+          onChange={handleReplyTextChange}
+          value={replyText}
+          placeholder="Fweet your reply"
+        />
+        <Button onClick={handleReply} mg="10px" wt="auto" primary>
+          Reply
         </Button>
       </FlexContainer>
     </FlexContainer>
   );
+
+  function handleReplyTextChange(e) {
+    const value = e.target.value;
+    setReplyText(value);
+  }
+
+  function handleReply() {
+    if (replyText.length <= 3) {
+      return;
+    }
+
+    const newReply = {
+      name: currentUser.name,
+      username: currentUser.username,
+      text: replyText,
+    };
+
+    props.replyActionCreator(
+      currentUser.id,
+      reply.fweetUserId,
+      reply.fweetId,
+      newReply
+    );
+    close();
+  }
 }
 
-export default Reply;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps, { replyActionCreator })(Reply);

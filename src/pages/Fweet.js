@@ -20,6 +20,7 @@ import {
 import LikeToggle from '../components/LikeToggle';
 import ProfilePicture from '../components/ProfilePicture';
 import Reply from '../components/Reply';
+import ReplyCard from '../components/ReplyCard';
 
 const Fweet = ({
   location = { state: { fweet: undefined } },
@@ -174,6 +175,13 @@ const Fweet = ({
             </FlexContainer>
           </FlexContainer>
           <Container className="space-container" />
+          <FlexContainer column>
+            {fweet.replies
+              ? fweet.replies.map((reply) => {
+                  return <ReplyCard reply={reply} />;
+                })
+              : null}
+          </FlexContainer>
         </FlexContainer>
       ) : (
         <div>Loading</div>
@@ -192,8 +200,8 @@ const Fweet = ({
   }
 
   function handleFweetReply() {
-    const replyId = fweet.id;
-    const userId = fweet.user.id;
+    const fweetId = fweet.id;
+    const fweetUserId = fweet.user.id;
     const name = fweet.user.name;
     const username = fweet.user.username;
     const pictureUrl = fweet.user.pictureUrl;
@@ -201,8 +209,8 @@ const Fweet = ({
     const dateCreated = fweet.dateCreated;
 
     const fweetReply = reply(
-      replyId,
-      userId,
+      fweetId,
+      fweetUserId,
       name,
       username,
       pictureUrl,

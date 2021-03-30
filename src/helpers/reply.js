@@ -1,6 +1,6 @@
 export default function reply(
-  replyId,
-  userId,
+  fweetId,
+  fweetUserId,
   name,
   username,
   pictureUrl,
@@ -8,8 +8,8 @@ export default function reply(
   dateCreated
 ) {
   return {
-    replyId,
-    userId,
+    fweetId,
+    fweetUserId,
     name,
     username,
     pictureUrl,

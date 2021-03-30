@@ -309,3 +309,62 @@ export async function unlike(userId, targetUserId, targetFweetId, likeId) {
     throw error;
   }
 }
+
+export async function reply(
+  currentUserId,
+  targetId,
+  fweetId,
+  reply,
+  replyTo = null
+) {
+  try {
+    const currentUserRef = firestore().collection('users').doc(currentUserId);
+    const fweetRef = firestore()
+      .collection('users')
+      .doc(targetId)
+      .collection('fweets')
+      .doc(fweetId);
+
+    if (!replyTo) {
+      const timestampNow = timestamp().now();
+      const replyId =
+        targetId + fweetId + currentUserId + timestampNow.nanoseconds;
+      const newReply = {
+        id: replyId,
+        userId: targetId,
+        name: reply.name,
+        username: reply.username,
+        text: reply.text,
+        dateCreated: timestampNow.toDate(),
+      };
+
+      const currentUserReply = {
+        id: replyId,
+        fweetId: fweetId,
+        userId: currentUserId,
+      };
+
+      const addUserReply = await currentUserRef.set(
+        {
+          replies: firestore.FieldValue.arrayUnion(currentUserReply),
+        },
+        {
+          merge: true,
+        }
+      );
+
+      const addFweetReply = await fweetRef.set(
+        {
+          replies: firestore.FieldValue.arrayUnion(newReply),
+        },
+        { merge: true }
+      );
+
+      return Promise.all([addUserReply, addFweetReply]);
+    }
+
+    throw Error('nope');
+  } catch (error) {
+    console.log('Error replying', error);
+  }
+}
