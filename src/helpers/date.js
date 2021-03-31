@@ -33,14 +33,20 @@ export function formatCardDate(fromDate) {
 }
 
 export function sortByDateCreated(dateArray) {
-  if (
-    !Array.isArray(dateArray) ||
-    dateArray.length === 0 ||
-    !dateArray[0].dateCreated ||
-    !dateArray[0].dateCreated.seconds
-  ) {
-    throw TypeError(`Invalid array argument`);
+  if (!Array.isArray(dateArray)) {
+    throw TypeError(`Invalid array`);
   }
+
+  if (dateArray.length === 0) {
+    return dateArray;
+  }
+
+  // Check if every object in the array has seconds to sort
+  dateArray.forEach((dateObj, index) => {
+    if (!dateObj.dateCreated || !dateObj.dateCreated.seconds) {
+      throw TypeError(`Invalid array object , index: ${index}`);
+    }
+  });
 
   const sortedArray = [...dateArray];
 
