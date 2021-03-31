@@ -214,11 +214,19 @@ const Fweet = ({
     const pictureUrl = '';
     const text = targetReply.text;
     const dateCreated = targetReply.dateCreated;
-    const to = {
-      parentId: targetReply.id,
-      userId: replyUserId,
-      username: username,
-    };
+
+    // If it is already a child reply, set parent id to child parent id
+    const to = targetReply.to
+      ? {
+          parentId: targetReply.to.parentId,
+          userId: replyUserId,
+          username: username,
+        }
+      : {
+          parentId: targetReply.id,
+          userId: replyUserId,
+          username: username,
+        };
 
     const replyCard = reply(
       fweetId,
