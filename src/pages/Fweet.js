@@ -20,7 +20,7 @@ import {
 import LikeToggle from '../components/LikeToggle';
 import ProfilePicture from '../components/ProfilePicture';
 import Reply from '../components/Reply';
-import ReplyCard from '../components/ReplyCard';
+import Replies from '../components/Replies';
 
 const Fweet = ({
   location = { state: { fweet: undefined } },
@@ -175,19 +175,13 @@ const Fweet = ({
             </FlexContainer>
           </FlexContainer>
           <Container className="space-container" />
-          <FlexContainer column>
-            {fweet.replies
-              ? fweet.replies.map((reply) => {
-                  return (
-                    <ReplyCard
-                      handleReply={handleReply}
-                      reply={reply}
-                      to={reply.to ? reply.to : null}
-                    />
-                  );
-                })
-              : null}
-          </FlexContainer>
+          {fweet.replies ? (
+            <Replies handleReply={handleReply} replies={fweet.replies} />
+          ) : (
+            <FlexContainer mg="10px">
+              <Text>No replies</Text>
+            </FlexContainer>
+          )}
         </FlexContainer>
       ) : (
         <div>Loading</div>

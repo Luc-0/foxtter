@@ -31,3 +31,20 @@ export function formatCardDate(fromDate) {
 
   return displayDate;
 }
+
+export function sortByDateCreated(dateArray) {
+  if (
+    !Array.isArray(dateArray) ||
+    dateArray.length === 0 ||
+    !dateArray[0].dateCreated ||
+    !dateArray[0].dateCreated.seconds
+  ) {
+    throw TypeError(`Invalid array argument`);
+  }
+
+  const sortedArray = [...dateArray];
+
+  sortedArray.sort((a, b) => a.dateCreated.seconds - b.dateCreated.seconds);
+
+  return sortedArray;
+}
