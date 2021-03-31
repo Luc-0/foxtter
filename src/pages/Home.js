@@ -8,6 +8,7 @@ import { HomeContainer, Container } from '../components/StyledComponents';
 import Fweet from '../components/Fweet';
 import PageName from '../components/PageName';
 import Fweets from '../components/Fweets';
+import { sortByDateCreated } from '../helpers/date';
 
 const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
   const [displayFweets, setDisplayFweets] = useState([]);
@@ -103,7 +104,8 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
         }
       });
 
-      setDisplayFweets(newDisplayFweets);
+      console.log(newDisplayFweets);
+      setDisplayFweets(sortByDateCreated(newDisplayFweets).reverse());
     } catch (error) {
       console.log(error);
     }
