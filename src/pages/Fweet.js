@@ -82,7 +82,7 @@ const Fweet = ({
   return (
     <div>
       {fweet ? (
-        <FlexContainer className="page-container relative">
+        <FlexContainer className="page-container">
           {openReply && currentReply ? (
             <Reply reply={currentReply} close={handleCloseReply} />
           ) : null}

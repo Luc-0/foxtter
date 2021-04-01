@@ -157,11 +157,12 @@ const Container = styled.div`
   }
 
   &.reply {
-    position: absolute;
+    position: fixed;
     top: 30%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    width: 90%;
+    width: auto;
     height: auto;
     background-color: #fff;
     border: 1px solid ${COLORS.spaceContainer};
