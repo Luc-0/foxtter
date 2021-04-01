@@ -17,3 +17,5 @@ export {
   updateUserFweets,
   updateFweet,
 } from './users';
+
+export { openReply, closeReply } from './UI';

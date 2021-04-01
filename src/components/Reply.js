@@ -16,7 +16,7 @@ function Reply({ currentUser, reply, close, ...props }) {
   const [replyText, setReplyText] = useState('');
 
   return (
-    <FlexContainer className="reply" column>
+    <FlexContainer onClick={(e) => e.preventDefault()} className="reply" column>
       <FlexContainer ai="flex-start" column>
         <HelperText onClick={close} mg="0 10px" size="1.2em">
           X

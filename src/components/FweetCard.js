@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { openReply, closeReply } from '../redux/actions';
 
 import { formatCardDate } from '../helpers/date';
 
@@ -13,8 +15,19 @@ import {
   LightText,
   HighlightCircle,
 } from './StyledComponents';
+import Reply from './Reply';
+import reply from '../helpers/reply';
 
-export default function FweetCard({ fweet, ...props }) {
+function FweetCard({ fweet, ...props }) {
+  const [fweetReply, setFweetReply] = useState();
+
+  useEffect(() => {
+    return function cleanUp() {
+      props.closeReply();
+    };
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <FlexContainer
       className="fweet-card"
@@ -33,6 +46,9 @@ export default function FweetCard({ fweet, ...props }) {
       ai="flex-start"
       jc="flex-start"
     >
+      {props.isReplyOpen && fweetReply ? (
+        <Reply close={handleCloseReply} reply={fweetReply} />
+      ) : null}
       <Container wt="auto" ht="100%">
         <ProfilePicture imgUrl={fweet.user.pictureUrl} />
       </Container>
@@ -54,7 +70,7 @@ export default function FweetCard({ fweet, ...props }) {
           <Text className="fweet-text">{fweet.text || 'text'}</Text>
         </Container>
         <FlexContainer onClick={preventDefault} jc="space-between" pd="0 20px">
-          <HighlightCircle title="Reply">
+          <HighlightCircle onClick={handleFweetReply} title="Reply">
             <Icon wt="16px" ht="16px" imgUrl="/images/reply-icon.png" />
           </HighlightCircle>
           <HighlightCircle title="Refweet">
@@ -69,4 +85,44 @@ export default function FweetCard({ fweet, ...props }) {
   function preventDefault(e) {
     e.preventDefault();
   }
+
+  function handleFweetReply() {
+    if (props.isReplyOpen) {
+      return;
+    }
+
+    const fweetId = fweet.id;
+    const fweetUserId = fweet.user.id;
+    const name = fweet.user.name;
+    const username = fweet.user.username;
+    const pictureUrl = fweet.user.pictureUrl;
+    const text = fweet.text;
+    const dateCreated = fweet.dateCreated;
+
+    const fweetReply = reply(
+      fweetId,
+      fweetUserId,
+      name,
+      username,
+      pictureUrl,
+      text,
+      dateCreated
+    );
+
+    setFweetReply(fweetReply);
+    props.openReply();
+  }
+
+  function handleCloseReply() {
+    setFweetReply(null);
+    props.closeReply();
+  }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isReplyOpen: state.UI.isReplyOpen,
+  };
+};
+
+export default connect(mapStateToProps, { openReply, closeReply })(FweetCard);
