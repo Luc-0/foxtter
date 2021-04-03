@@ -36,11 +36,7 @@ const users = (state = initialState, action) => {
     case UPDATE_USER_FWEETS: {
       const userId = action.payload.id;
       const fweets = action.payload.fweets;
-      const user = state.all[userId];
-
-      if (!user) {
-        return state;
-      }
+      let user = state.all[userId] ? state.all[userId] : {};
 
       const newAll = { ...state.all };
       newAll[userId] = {

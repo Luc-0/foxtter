@@ -78,9 +78,13 @@ const Profile = ({
 
   useEffect(() => {
     if (!isLoadingFweets) {
-      const user = props.allUsers[profileUser.id];
-      if (!user) {
-        return;
+      let user;
+      if (currentUser.id === profileUser.id) {
+        user = { ...currentUser };
+        const updatedFweets = props.allUsers[currentUser.id].fweets;
+        user.fweets = updatedFweets;
+      } else {
+        user = props.allUsers[profileUser.id];
       }
 
       const userFweets = user.fweets;
