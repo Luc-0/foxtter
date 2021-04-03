@@ -102,7 +102,8 @@ const Profile = ({
           userFweet.text,
           userFweet.dateCreated,
           userFweet.refweets,
-          userFweet.replies
+          userFweet.replies,
+          userFweet.refweet ? userFweet.refweet : null
         );
 
         displayFweets.push(newFweet);

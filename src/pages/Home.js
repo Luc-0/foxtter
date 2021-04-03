@@ -96,7 +96,8 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
             userFweet.text,
             userFweet.dateCreated,
             userFweet.refweets,
-            userFweet.replies
+            userFweet.replies,
+            userFweet.refweet ? userFweet.refweet : null
           );
 
           count++;

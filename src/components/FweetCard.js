@@ -6,6 +6,7 @@ import { openReply, closeReply } from '../redux/actions';
 import { formatCardDate } from '../helpers/date';
 
 import LikeToggle from './LikeToggle';
+import Refweet from './Refweet';
 import ProfilePicture from './ProfilePicture';
 import {
   Container,
@@ -35,7 +36,7 @@ function FweetCard({ fweet, ...props }) {
       to={
         fweet
           ? {
-              pathname: `${fweet.user.username}/status/${fweet.id}`,
+              pathname: `/${fweet.user.username}/status/${fweet.id}`,
               state: {
                 fweet: fweet,
               },
@@ -49,9 +50,11 @@ function FweetCard({ fweet, ...props }) {
       {props.isReplyOpen && fweetReply ? (
         <Reply close={handleCloseReply} reply={fweetReply} />
       ) : null}
+
       <Container wt="auto" ht="100%">
         <ProfilePicture imgUrl={fweet.user.pictureUrl} />
       </Container>
+
       <FlexContainer
         className="fweet-card-text-container"
         column
@@ -66,18 +69,38 @@ function FweetCard({ fweet, ...props }) {
           <LightText mg="0 10px">·</LightText>
           <LightText>{formatCardDate(fweet.dateCreated) || '01m'}</LightText>
         </FlexContainer>
+
         <Container pd="10px">
-          <Text className="fweet-text">{fweet.text || 'text'}</Text>
+          {fweet.refweet ? (
+            <Container>
+              <LightText>Refweet</LightText>
+              <FweetCard
+                isReplyOpen={props.isReplyOpen}
+                openReply={props.openReply}
+                closeReply={props.closeReply}
+                fweet={fweet.refweet}
+              />
+            </Container>
+          ) : (
+            <Text className="fweet-text">{fweet.text || ''}</Text>
+          )}
         </Container>
-        <FlexContainer onClick={preventDefault} jc="space-between" pd="0 20px">
-          <HighlightCircle onClick={handleFweetReply} title="Reply">
-            <Icon wt="16px" ht="16px" imgUrl="/images/reply-icon.png" />
-          </HighlightCircle>
-          <HighlightCircle title="Refweet">
-            <Icon wt="16px" ht="16px" imgUrl="/images/refweet-icon.png" />
-          </HighlightCircle>
-          <LikeToggle targetFweet={fweet} iconClass="fweet-card" />
-        </FlexContainer>
+
+        {props.refweetCard ? null : (
+          <FlexContainer
+            onClick={preventDefault}
+            jc="space-between"
+            pd="0 20px"
+          >
+            <HighlightCircle onClick={handleFweetReply} title="Reply">
+              <Icon wt="16px" ht="16px" imgUrl="/images/reply-icon.png" />
+            </HighlightCircle>
+
+            {fweet.refweet ? null : <Refweet fweet={fweet} />}
+
+            <LikeToggle targetFweet={fweet} iconClass="fweet-card" />
+          </FlexContainer>
+        )}
       </FlexContainer>
     </FlexContainer>
   );

@@ -21,6 +21,8 @@ import LikeToggle from '../components/LikeToggle';
 import ProfilePicture from '../components/ProfilePicture';
 import Reply from '../components/Reply';
 import Replies from '../components/Replies';
+import FweetCard from '../components/FweetCard';
+import Refweet from '../components/Refweet';
 
 const Fweet = ({
   location = { state: { fweet: undefined } },
@@ -137,7 +139,14 @@ const Fweet = ({
             </FlexContainer>
 
             <FlexContainer jc="flex-start" mg="20px 0">
-              <Text size="1.2em">{fweet.text}</Text>
+              {fweet.refweet ? (
+                <Container pd="0 20px">
+                  <LightText>Refweet</LightText>
+                  <FweetCard fweet={fweet.refweet} refweetCard={true} />
+                </Container>
+              ) : (
+                <Text className="fweet-text">{fweet.text || ''}</Text>
+              )}
             </FlexContainer>
 
             <FlexContainer jc="flex-start">
@@ -164,9 +173,9 @@ const Fweet = ({
               >
                 <Icon wt="24px" ht="24px" imgUrl="/images/reply-icon.png" />
               </HighlightCircle>
-              <HighlightCircle title="Refweet" className="fweet">
-                <Icon wt="24px" ht="24px" imgUrl="/images/refweet-icon.png" />
-              </HighlightCircle>
+
+              {fweet.refweet ? null : <Refweet fweet={fweet} />}
+
               <LikeToggle
                 targetFweet={fweet}
                 circleClass="fweet"

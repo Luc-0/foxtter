@@ -7,7 +7,8 @@ export default function fweet(
   fweetText,
   dateCreated,
   refweets,
-  replies
+  replies,
+  refweet
 ) {
   return {
     user: {
@@ -21,5 +22,6 @@ export default function fweet(
     dateCreated: dateCreated,
     refweets: refweets,
     replies: replies,
+    refweet: refweet,
   };
 }

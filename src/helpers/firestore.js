@@ -9,6 +9,40 @@ export async function createFweet(userId, fweet) {
   return userFweetsRef.add(fweet);
 }
 
+export async function createRefweet(userId, fweetContent, target) {
+  try {
+    const dateCreated = firestore.Timestamp.now().toDate();
+    const newFweet = {
+      ...fweetContent,
+      likes: 0,
+      refweets: [],
+      replies: [],
+      dateCreated: dateCreated,
+    };
+
+    const createdFweetRes = await createFweet(userId, newFweet);
+
+    const createdFweetId = createdFweetRes.id;
+    const targetFweetRef = firestore()
+      .collection('users')
+      .doc(target.userId)
+      .collection('fweets')
+      .doc(target.fweetId);
+    const updateTargetFweetRes = await targetFweetRef.set(
+      {
+        refweets: firestore.FieldValue.arrayUnion(userId + createdFweetId),
+      },
+      { merge: true }
+    );
+
+    return Promise.all([createdFweetRes, updateTargetFweetRes]).then(() => {
+      return { ...newFweet, id: createdFweetId };
+    });
+  } catch (error) {
+    console.log('error refweeting: ', error.message);
+  }
+}
+
 export async function createNewUserDoc(uid, name) {
   const username = await createValidUsername(name);
 

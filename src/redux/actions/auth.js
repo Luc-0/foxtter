@@ -20,6 +20,7 @@ import {
   createNewUserDoc,
   getUserById,
   createFweet,
+  createRefweet,
   reply as firestoreReply,
 } from '../../helpers/firestore';
 import fweet from '../../helpers/fweet';
@@ -170,6 +171,27 @@ export function addFweet(currentUser, fweetContent) {
       .catch((error) => {
         console.log('create fweet error', error.message);
       });
+  };
+}
+
+export function refweet(currentUser, fweetContent, target) {
+  //
+  return (dispatch) => {
+    createRefweet(currentUser.id, fweetContent, target).then((createdFweet) => {
+      const newFweet = fweet(
+        currentUser.id,
+        currentUser.name,
+        currentUser.username,
+        currentUser.pictureUrl,
+        createdFweet.id,
+        createdFweet.text,
+        createdFweet.dateCreated,
+        createdFweet.refweets,
+        createdFweet.replies,
+        createdFweet.refweet
+      );
+      dispatch(saveFweet(newFweet));
+    });
   };
 }
 
