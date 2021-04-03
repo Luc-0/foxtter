@@ -382,6 +382,7 @@ export async function reply(
       name: reply.name,
       username: reply.username,
       text: reply.text,
+      pictureUrl: reply.pictureUrl,
       dateCreated: timestampNow.toDate(),
     };
 

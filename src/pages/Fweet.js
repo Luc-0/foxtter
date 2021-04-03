@@ -214,7 +214,7 @@ const Fweet = ({
     const name = targetReply.name;
     const username = targetReply.username;
     const replyUserId = targetReply.userId;
-    const pictureUrl = '';
+    const pictureUrl = targetReply.pictureUrl;
     const text = targetReply.text;
     const dateCreated = targetReply.dateCreated;
 

@@ -53,6 +53,7 @@ function Reply({ currentUser, reply, close, ...props }) {
     const newReply = {
       name: currentUser.name,
       username: currentUser.username,
+      pictureUrl: currentUser.pictureUrl,
       text: replyText,
     };
 
