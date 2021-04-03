@@ -173,20 +173,42 @@ export async function getAllUsers() {
   return allUsers;
 }
 
-export async function follow(currentUserId, targetId) {
-  const currentUserRef = firestore().collection('users').doc(currentUserId);
+export async function follow(userId, targetId) {
+  try {
+    const userRef = firestore().collection('users').doc(userId);
+    const targetUserRef = firestore().collection('users').doc(targetId);
 
-  return currentUserRef.update({
-    following: firestore.FieldValue.arrayUnion(targetId),
-  });
+    const updateUserFollowing = userRef.update({
+      following: firestore.FieldValue.arrayUnion(targetId),
+    });
+
+    const updateTargetUserFollowers = targetUserRef.update({
+      followers: firestore.FieldValue.arrayUnion(userId),
+    });
+
+    return Promise.all([updateUserFollowing, updateTargetUserFollowers]);
+  } catch (error) {
+    console.log('error following', error.message);
+  }
 }
 
-export async function unfollow(currentUserId, targetId) {
-  const currentUserRef = firestore().collection('users').doc(currentUserId);
+export async function unfollow(userId, targetId) {
+  try {
+    const userRef = firestore().collection('users').doc(userId);
+    const targetUserRef = firestore().collection('users').doc(targetId);
 
-  return currentUserRef.update({
-    following: firestore.FieldValue.arrayRemove(targetId),
-  });
+    const updateUserUnfollowing = userRef.update({
+      following: firestore.FieldValue.arrayRemove(targetId),
+    });
+
+    const updateTargetUserFollowers = targetUserRef.update({
+      followers: firestore.FieldValue.arrayRemove(userId),
+    });
+
+    return Promise.all([updateUserUnfollowing, updateTargetUserFollowers]);
+  } catch (error) {
+    console.log('error unfollowing', error.message);
+  }
 }
 
 export async function getUserFweets(userId) {
