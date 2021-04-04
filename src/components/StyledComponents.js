@@ -84,7 +84,7 @@ const Container = styled.div`
   border-radius: ${(props) => (props.br ? props.br : '')};
 
   &.page-name-container {
-    border-bottom: 1px solid ${COLORS.lightGray};
+    border-bottom: 1px solid ${COLORS.borderColor};
     width: 100%;
     height: 55px;
     min-height: 55px;
@@ -187,7 +187,7 @@ const FlexContainer = styled(Container)`
 
 const NavbarContainer = styled(FlexContainer)`
   position: fixed;
-  border-right: 1px solid ${COLORS.lightGray};
+  border-right: 1px solid ${COLORS.borderColor};
   height: 100%;
   width: 300px;
   min-height: 400px;
