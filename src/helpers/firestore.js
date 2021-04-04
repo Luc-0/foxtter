@@ -120,30 +120,28 @@ export async function getUserById(id) {
   }
 }
 
-export async function getRecommendedUsers(
-  currentUserId,
-  followingIds,
-  recommendedLimit
-) {
+export async function getRecommendedUsers(currentUserId, followingIds) {
+  if (!Array.isArray(followingIds)) {
+    throw TypeError('Not an array');
+  }
+
   try {
-    const recommendUsersRef =
-      Array.isArray(followingIds) && followingIds.length > 0
-        ? firestore()
-            .collection('users')
-            .where('id', 'not-in', [currentUserId, ...followingIds])
-            .limit(recommendedLimit)
-        : firestore().collection('users').limit(recommendedLimit);
+    const minLimit = 30;
+    const limit = followingIds.length + minLimit;
+    const recommendedUsersRef = firestore().collection('users').limit(limit);
 
     const users = {};
-    const res = await recommendUsersRef.get();
+    const res = await recommendedUsersRef.get();
 
     if (res.empty) {
       return users;
     }
 
     const usersDoc = res.docs;
+    const notRecommendedIds = [currentUserId, ...followingIds];
+
     usersDoc.forEach((userDoc) => {
-      if (!userDoc.exists) {
+      if (!userDoc.exists || notRecommendedIds.includes(userDoc.id)) {
         return;
       }
 

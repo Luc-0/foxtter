@@ -28,11 +28,7 @@ const Connect = ({ currentUser, users, ...props }) => {
       currentUser.following &&
       props.recommendedUsersId.length === 0
     ) {
-      props.loadRecommendedUsers(
-        currentUser.id,
-        currentUser.following,
-        maxDisplay
-      );
+      props.loadRecommendedUsers(currentUser.id, currentUser.following);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

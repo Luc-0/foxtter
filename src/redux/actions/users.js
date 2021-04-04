@@ -20,9 +20,9 @@ const saveRecommendedUsersId = (recommmendedUsersId) => {
   };
 };
 
-export function loadRecommendedUsers(currentUserId, followingIds, limit) {
+export function loadRecommendedUsers(currentUserId, followingIds) {
   return (dispatch) => {
-    getRecommendedUsers(currentUserId, followingIds, limit)
+    getRecommendedUsers(currentUserId, followingIds)
       .then((users) => {
         const recommendedUsersId = [...Object.keys(users)];
 
