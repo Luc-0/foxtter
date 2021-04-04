@@ -261,21 +261,25 @@ export async function loadUsers(ids = []) {
     return [];
   }
 
-  const usersRef = firestore().collection('users').where('id', 'in', ids);
-
   try {
     const users = {};
-    const res = await usersRef.get();
+    const usersDoc = [];
 
-    if (res.empty) {
-      return users;
+    for (let i = 0; i < ids.length; i++) {
+      const userId = ids[i];
+      const userDocRef = firestore().collection('users').doc(userId);
+      const userDoc = await userDocRef.get();
+
+      if (!userDoc.exists) {
+        continue;
+      }
+
+      usersDoc.push(userDoc);
     }
 
-    const docs = res.docs;
-
-    for (let i = 0; i < docs.length; i++) {
-      const userDoc = docs[i];
-      const currentUser = userDoc.data();
+    for (let i = 0; i < usersDoc.length; i++) {
+      const currentUserDoc = usersDoc[i];
+      const currentUser = currentUserDoc.data();
       const currentUserFweets = {};
 
       const fweetsRef = firestore()
@@ -310,7 +314,6 @@ export async function loadUsers(ids = []) {
     }
 
     return users;
-    // res.docs.forEach(async (userDoc) => {
   } catch (error) {
     return error;
   }

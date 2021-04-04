@@ -1,2 +1,3 @@
 - Fix query limit in firestore;
 - Fix home page not getting last 3 fweets from each user.
+- Fix propagation on fweet card reply.
