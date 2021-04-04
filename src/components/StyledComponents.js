@@ -174,6 +174,10 @@ const Container = styled.div`
   &.relative {
     position: relative;
   }
+
+  &.pointer {
+    cursor: pointer;
+  }
 `;
 
 const FlexContainer = styled(Container)`

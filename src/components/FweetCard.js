@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { openReply, closeReply } from '../redux/actions';
 
@@ -20,6 +20,7 @@ import Reply from './Reply';
 import reply from '../helpers/reply';
 
 function FweetCard({ fweet, ...props }) {
+  const history = useHistory();
   const [fweetReply, setFweetReply] = useState();
 
   useEffect(() => {
@@ -31,18 +32,8 @@ function FweetCard({ fweet, ...props }) {
 
   return (
     <FlexContainer
-      className="fweet-card"
-      as={Link}
-      to={
-        fweet
-          ? {
-              pathname: `/${fweet.user.username}/status/${fweet.id}`,
-              state: {
-                fweet: fweet,
-              },
-            }
-          : '/home'
-      }
+      className="fweet-card pointer"
+      onClick={handleFweetClick}
       pd="10px"
       ai="flex-start"
       jc="flex-start"
@@ -88,7 +79,7 @@ function FweetCard({ fweet, ...props }) {
 
         {props.refweetCard ? null : (
           <FlexContainer
-            onClick={preventDefault}
+            onClick={stopPropagation}
             jc="space-between"
             pd="0 20px"
           >
@@ -105,8 +96,22 @@ function FweetCard({ fweet, ...props }) {
     </FlexContainer>
   );
 
-  function preventDefault(e) {
-    e.preventDefault();
+  function handleFweetClick(e) {
+    if (!fweet) {
+      return;
+    }
+
+    const pathname = `/${fweet.user.username}/status/${fweet.id}`;
+    const state = {
+      fweet: fweet,
+    };
+
+    history.push(pathname, state);
+    stopPropagation(e);
+  }
+
+  function stopPropagation(e) {
+    e.stopPropagation();
   }
 
   function handleFweetReply() {
