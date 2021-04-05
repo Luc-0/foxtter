@@ -12,10 +12,11 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import { Container, FlexContainer } from './components/StyledComponents';
+import { FlexContainer } from './components/StyledComponents';
 import ProfileCard from './components/ProfileCard';
 import Connect from './pages/Connect';
 import Fweet from './pages/Fweet';
+import SearchUser from './components/SearchUser';
 
 function App(props) {
   useEffect(() => {
@@ -86,10 +87,11 @@ function App(props) {
                   component={Fweet}
                 />
               </Switch>
-              <Container bgc="rgb(235, 238, 240)" wt="100%">
+              <FlexContainer column>
+                <SearchUser />
                 <ProfileCard />
                 <ProfileCard />
-              </Container>
+              </FlexContainer>
             </FlexContainer>
           </main>
         </FlexContainer>

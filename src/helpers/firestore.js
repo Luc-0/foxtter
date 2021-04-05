@@ -436,3 +436,31 @@ export async function reply(
     throw error;
   }
 }
+
+export async function searchUsers(username, searchText) {
+  try {
+    const limit = 5;
+    const searchRef = firestore()
+      .collection('users')
+      .where('username', '>=', searchText)
+      .where('username', '<=', searchText + '\uf8ff')
+      .where('username', '!=', username)
+      .limit(limit);
+
+    const res = await searchRef.get();
+
+    if (res.empty) {
+      return {};
+    }
+
+    const users = {};
+    const usersDoc = res.docs;
+    usersDoc.forEach((doc) => {
+      users[doc.id] = doc.data();
+    });
+
+    return users;
+  } catch (error) {
+    console.log('error searching users', error);
+  }
+}

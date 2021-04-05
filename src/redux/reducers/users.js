@@ -5,12 +5,14 @@ import {
   UPDATE_USER_FWEETS,
   UPDATE_USER_FWEETS_SUCCESS,
   UPDATE_USER_FWEET,
+  UPDATE_SEARCH_IDS,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
   all: {},
   recommendedUsersId: [],
+  searchUsersId: [],
   updateFweetsSuccess: null,
   updateFweetsError: null,
 };
@@ -80,6 +82,12 @@ const users = (state = initialState, action) => {
           ...state.all,
           [userId]: newUser,
         },
+      });
+    }
+    case UPDATE_SEARCH_IDS: {
+      const searchUsersId = action.payload.searchUsersId;
+      return updateObject(state, {
+        searchUsersId: searchUsersId,
       });
     }
     default:

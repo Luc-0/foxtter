@@ -324,6 +324,32 @@ const Textarea = styled.textarea`
   border-bottom: 1px solid ${COLORS.lightGray};
 `;
 
+const Searchbar = styled.input`
+  width: 100%;
+  height: auto;
+  padding: 5px 2%;
+  font-size: 1.2em;
+
+  resize: none;
+  outline: none;
+  border: 1px solid ${COLORS.borderColor};
+  border-radius: 20px;
+`;
+
+const SearchbarResult = styled.div`
+  position: absolute;
+  top: 100%;
+  min-height: 20px;
+  width: 95%;
+
+  padding: 20px;
+  background-color: #fff;
+
+  border: 1px solid ${COLORS.borderColor};
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+`;
+
 const HelperText = styled(Text)`
   display: inline-block;
   cursor: pointer;
@@ -466,4 +492,6 @@ export {
   NavbarHeader,
   Line,
   StyledSvg,
+  Searchbar,
+  SearchbarResult,
 };

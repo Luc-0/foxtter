@@ -17,6 +17,7 @@ export {
   loadRecommendedUsers,
   updateUserFweets,
   updateFweet,
+  searchUsers,
 } from './users';
 
 export { openReply, closeReply } from './UI';
