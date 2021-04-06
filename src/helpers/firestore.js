@@ -56,6 +56,7 @@ export async function createNewUserDoc(uid, name) {
     followers: [],
     pictureUrl: '',
     backgroundUrl: '',
+    description: '',
   };
 
   await firestore().collection('users').doc(uid).set(newUser);

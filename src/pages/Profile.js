@@ -222,11 +222,8 @@ const Profile = ({
                       </LightText>
                     </Container>
 
-                    {/* User has a bio */}
-                    {true ? (
-                      <Text mg="10px 0">
-                        {profileUser ? profileUser.bio : ''}
-                      </Text>
+                    {profileUser && profileUser.description ? (
+                      <Text mg="10px 0">{profileUser.description}</Text>
                     ) : null}
 
                     <FlexContainer jc="flex-start" mg="15px 0">
