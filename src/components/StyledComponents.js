@@ -146,6 +146,23 @@ const Container = styled.div`
     left: 2%;
   }
 
+  &.profile-setup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+    height: auto;
+    width: 100%;
+    max-width: 600px;
+
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 1px ${COLORS.primaryShadow};
+  }
+
   &.profile-card {
     width: 100%;
     height: 73px;
@@ -322,6 +339,10 @@ const Textarea = styled.textarea`
   outline: none;
   border: none;
   border-bottom: 1px solid ${COLORS.lightGray};
+
+  &.profile-setup {
+    border: 1px solid ${COLORS.lightGray};
+  }
 `;
 
 const Searchbar = styled.input`
