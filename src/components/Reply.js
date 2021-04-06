@@ -18,7 +18,14 @@ function Reply({ currentUser, reply, close, ...props }) {
   return (
     <FlexContainer onClick={(e) => e.preventDefault()} className="reply" column>
       <FlexContainer ai="flex-start" column>
-        <HelperText onClick={close} mg="0 10px" size="1.2em">
+        <HelperText
+          onClick={(e) => {
+            close();
+            e.stopPropagation();
+          }}
+          mg="0 10px"
+          size="1.2em"
+        >
           X
         </HelperText>
         <FlexContainer>
@@ -27,7 +34,7 @@ function Reply({ currentUser, reply, close, ...props }) {
 
         <ReplyCard reply={reply} hideReplyBtn={true} />
       </FlexContainer>
-      <FlexContainer jc="flex-end">
+      <FlexContainer onClick={(e) => e.stopPropagation()} jc="flex-end">
         <Textarea
           onChange={handleReplyTextChange}
           value={replyText}

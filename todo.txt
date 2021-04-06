@@ -1,3 +1,3 @@
  ̶-̶ ̶F̶i̶x̶ ̶q̶u̶e̶r̶y̶ ̶l̶i̶m̶i̶t̶ ̶i̶n̶ ̶f̶i̶r̶e̶s̶t̶o̶r̶e̶;̶
 - Fix home page not getting last 3 fweets from each user.
-- Fix propagation on fweet card reply.
+-̶ ̶F̶i̶x̶ ̶p̶r̶o̶p̶a̶g̶a̶t̶i̶o̶n̶ ̶o̶n̶ ̶f̶w̶e̶e̶t̶ ̶c̶a̶r̶d̶ ̶r̶e̶p̶l̶y̶.̶
