@@ -54,7 +54,7 @@ function ReplyCard({ reply, to, ...props }) {
 
               <Container>
                 <Text className="break-anywhere" pd="10px">
-                  {reply.text || 'text'}
+                  {reply.text || <LightText>Refweet</LightText>}
                 </Text>
               </Container>
             </FlexContainer>
