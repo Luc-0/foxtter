@@ -6,6 +6,7 @@ import {
   UPDATE_USER_FWEETS_SUCCESS,
   UPDATE_USER_FWEET,
   UPDATE_SEARCH_IDS,
+  UPDATE_USER,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -88,6 +89,23 @@ const users = (state = initialState, action) => {
       const searchUsersId = action.payload.searchUsersId;
       return updateObject(state, {
         searchUsersId: searchUsersId,
+      });
+    }
+    case UPDATE_USER: {
+      const userId = action.payload.userId;
+      const userUpdate = action.payload.userUpdate;
+
+      const user = state.all[userId] || {};
+      const updatedUser = {
+        ...user,
+        ...userUpdate,
+      };
+
+      return updateObject(state, {
+        all: {
+          ...state.all,
+          [userId]: updatedUser,
+        },
       });
     }
     default:

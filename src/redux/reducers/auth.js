@@ -10,6 +10,7 @@ import {
   LIKE,
   UNLIKE,
   REPLY_ERROR,
+  UPDATE_USER,
 } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -94,6 +95,21 @@ const auth = (state = initialState, action) => {
 
       return updateObject(state, {
         replyError: error,
+      });
+    }
+    case UPDATE_USER: {
+      const userId = action.payload.userId;
+      const userUpdate = action.payload.userUpdate;
+
+      if (userId !== state.user.id) {
+        return state;
+      }
+
+      return updateObject(state, {
+        user: {
+          ...state.user,
+          ...userUpdate,
+        },
       });
     }
     default:

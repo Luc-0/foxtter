@@ -15,3 +15,25 @@ export function validateName(name, maxLength = 30) {
   const re = /^([A-Z]{3,})[A-Z]*(\s+[A-Z]+)*$/i;
   return re.test(name);
 }
+
+export function validateDescription(description, maxLength = 160) {
+  if (typeof description !== 'string' || description.length > maxLength) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isEqualString(firstString, secondString) {
+  if (typeof firstString !== 'string' || typeof secondString !== 'string') {
+    return false;
+  }
+
+  const compare = firstString.localeCompare(secondString);
+
+  if (compare !== 0) {
+    return false;
+  }
+
+  return true;
+}

@@ -27,6 +27,7 @@ import ProfilePicture from '../components/ProfilePicture';
 import TabList from '../components/TabList';
 import FollowToggle from '../components/FollowToggle';
 import Fweets from '../components/Fweets';
+import ProfileSetup from '../components/ProfileSetup';
 
 const Profile = ({
   location = { state: { profileUserId: undefined } },
@@ -37,6 +38,7 @@ const Profile = ({
   const [profileUser, setProfileUser] = useState();
   const [profileFweets, setProfileFweets] = useState();
   const [isLoadingFweets, setIsLoadingFweets] = useState(true);
+  const [isProfileSetupOpen, setIsProfileSetupOpen] = useState(false);
 
   useEffect(() => {
     // Get profile user from link state
@@ -120,6 +122,7 @@ const Profile = ({
 
   return (
     <div>
+      {isProfileSetupOpen ? <ProfileSetup close={closeProfileSetup} /> : null}
       <Switch>
         <Route
           exact
@@ -187,7 +190,7 @@ const Profile = ({
                   >
                     {/* Current user profile ? */}
                     {currentUser.id === profileUser.id ? (
-                      <Button wt="auto" ht="38px">
+                      <Button onClick={openProfileSetup} wt="auto" ht="38px">
                         Set up profile
                       </Button>
                     ) : (
@@ -317,6 +320,13 @@ const Profile = ({
       </Switch>
     </div>
   );
+
+  function openProfileSetup() {
+    setIsProfileSetupOpen(true);
+  }
+  function closeProfileSetup() {
+    setIsProfileSetupOpen(false);
+  }
 };
 
 const mapStateToProps = (state) => {

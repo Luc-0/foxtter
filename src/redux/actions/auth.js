@@ -10,6 +10,7 @@ import {
   LIKE,
   UNLIKE,
   REPLY_ERROR,
+  UPDATE_USER,
 } from './actionTypes';
 import {
   signup as signupHelper,
@@ -22,6 +23,7 @@ import {
   createFweet,
   createRefweet,
   reply as firestoreReply,
+  updateUser as firestoreUpdateUser,
 } from '../../helpers/firestore';
 import fweet from '../../helpers/fweet';
 
@@ -233,5 +235,27 @@ export function reply(currUserId, targetId, fweetId, reply, replyTo = null) {
     ).catch((error) => {
       dispatch(replyError(error));
     });
+  };
+}
+
+const saveUserUpdate = (userId, userUpdate) => {
+  return {
+    type: UPDATE_USER,
+    payload: {
+      userId: userId,
+      userUpdate: userUpdate,
+    },
+  };
+};
+
+export function updateUser(userId, userUpdate) {
+  return (dispatch) => {
+    firestoreUpdateUser(userId, userUpdate)
+      .then(() => {
+        dispatch(saveUserUpdate(userId, userUpdate));
+      })
+      .catch((error) => {
+        console.log('error updateing user', error);
+      });
   };
 }

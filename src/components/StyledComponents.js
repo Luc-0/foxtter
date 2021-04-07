@@ -327,6 +327,10 @@ const Input = styled.input`
   &:focus {
     border: 2px solid ${COLORS.primary};
   }
+
+  &.hide {
+    display: none;
+  }
 `;
 
 const Textarea = styled.textarea`

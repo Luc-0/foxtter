@@ -107,6 +107,23 @@ async function createValidUsername(name) {
   }
 }
 
+export async function updateUser(userId, userData) {
+  try {
+    const userRef = firestore().collection('users').doc(userId);
+
+    return userRef.set(
+      {
+        ...userData,
+      },
+      {
+        merge: true,
+      }
+    );
+  } catch (error) {
+    console.log('error updating user', error);
+  }
+}
+
 export async function getUserById(id) {
   try {
     const userDoc = await firestore().collection('users').doc(id).get();

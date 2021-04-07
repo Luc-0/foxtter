@@ -11,6 +11,7 @@ export {
   like,
   unlike,
   reply,
+  updateUser,
 } from './auth';
 export {
   loadUsers,
