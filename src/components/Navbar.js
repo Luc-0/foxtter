@@ -35,7 +35,7 @@ const Navbar = (props) => {
           <Icon wt="24px" ht="24px" imgUrl="/images/home-icon.png" />
           <NavText>Home</NavText>
         </NavButton>
-        <NavButton
+        {/* <NavButton
           data-btnid={dataNavButtonId}
           onClick={handleSelect}
           as={Link}
@@ -43,8 +43,8 @@ const Navbar = (props) => {
         >
           <Icon wt="24px" ht="24px" imgUrl="/images/notifications-icon.png" />
           <NavText>Notifications</NavText>
-        </NavButton>
-        <NavButton
+        </NavButton> */}
+        {/* <NavButton
           data-btnid={dataNavButtonId}
           onClick={handleSelect}
           as={Link}
@@ -52,7 +52,7 @@ const Navbar = (props) => {
         >
           <Icon wt="24px" ht="24px" imgUrl="/images/messages-icon.png" />
           <NavText>Messages</NavText>
-        </NavButton>
+        </NavButton> */}
         <NavButton
           data-btnid={dataNavButtonId}
           onClick={handleSelect}

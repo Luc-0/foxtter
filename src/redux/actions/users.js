@@ -48,7 +48,6 @@ const saveUsers = (users) => {
 
 export function loadUsers(userIds) {
   return (dispatch) => {
-    console.log('load following users action creator');
     firestoreLoadUsers(userIds)
       .then((users) => {
         dispatch(saveUsers(users));

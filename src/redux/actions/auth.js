@@ -81,7 +81,6 @@ export function login(email, password) {
       .then((user) => {
         getUserById(user.uid).then((userData) => {
           dispatch(signInUser(userData));
-          console.log('signin');
         });
       })
       .catch((error) => {

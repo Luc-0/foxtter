@@ -21,7 +21,6 @@ import SearchUser from './components/SearchUser';
 function App(props) {
   useEffect(() => {
     const userId = getUserId();
-    console.log(userId);
     if (userId) {
       props.loadUser(userId);
     }
@@ -56,18 +55,18 @@ function App(props) {
                   path="/home"
                   component={Home}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                   authenticated={props.authenticated}
                   exact
                   path="/notifications"
                   component={() => <div>Notifications</div>}
-                />
-                <PrivateRoute
+                /> */}
+                {/* <PrivateRoute
                   authenticated={props.authenticated}
                   exact
                   path="/messages"
                   component={() => <div>Messages</div>}
-                />
+                /> */}
                 <PrivateRoute
                   authenticated={props.authenticated}
                   exact
@@ -89,8 +88,6 @@ function App(props) {
               </Switch>
               <FlexContainer column>
                 <SearchUser />
-                <ProfileCard />
-                <ProfileCard />
               </FlexContainer>
             </FlexContainer>
           </main>

@@ -49,8 +49,6 @@ export default function TabList({ items }) {
   function handleSelect(e) {
     const target = e.target;
 
-    console.log(target.parentElement);
-
     // Remove initial class
     if (prevSelectedItem === undefined) {
       const parentElement = target.parentElement;

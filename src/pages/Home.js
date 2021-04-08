@@ -25,7 +25,6 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
   useEffect(() => {
     if (props.allUsers) {
       updateDisplayFweets(props.allUsers);
-      console.log('update display');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.allUsers]);
@@ -105,7 +104,6 @@ const Home = ({ currentUser, loadFollowingUsers, ...props }) => {
         }
       });
 
-      console.log(newDisplayFweets);
       setDisplayFweets(sortByDateCreated(newDisplayFweets).reverse());
     } catch (error) {
       console.log(error);

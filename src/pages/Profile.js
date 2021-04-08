@@ -195,13 +195,13 @@ const Profile = ({
                       </Button>
                     ) : (
                       <FlexContainer wt="auto">
-                        <HighlightCircle mg="0 10px" border>
+                        {/* <HighlightCircle mg="0 10px" border>
                           <Icon
                             wt="16px"
                             ht="16px"
                             imgUrl="/images/messages-icon.png"
                           />
-                        </HighlightCircle>
+                        </HighlightCircle> */}
                         <FollowToggle targetUser={profileUser} />
                       </FlexContainer>
                     )}
@@ -232,16 +232,16 @@ const Profile = ({
                     <FlexContainer jc="flex-start" mg="15px 0">
                       <FlexContainer wt="auto">
                         <Text
-                          as={Link}
-                          to={`${routerLocation.pathname}/following`}
+                        // as={Link}
+                        // to={`${routerLocation.pathname}/following`}
                         >
                           {profileUser ? profileUser.following.length : '0'}{' '}
                           Following
                         </Text>
                         <Text
                           mg="0 10px"
-                          as={Link}
-                          to={`${routerLocation.pathname}/followers`}
+                          // as={Link}
+                          // to={`${routerLocation.pathname}/followers`}
                         >
                           {profileUser ? profileUser.followers.length : '0'}{' '}
                           Followers
@@ -250,46 +250,45 @@ const Profile = ({
                     </FlexContainer>
                   </FlexContainer>
 
-                  <Router>
-                    <TabList
-                      items={[
-                        {
-                          text: 'Fweets',
-                          to: `${routerLocation.pathname}`,
-                          selected: true,
-                        },
-                        {
-                          text: 'Fweets & Replies',
-                          to: `${routerLocation.pathname}/with_replies`,
-                        },
-                        {
-                          text: 'Likes',
-                          to: `${routerLocation.pathname}/likes`,
-                        },
-                      ]}
-                    />
-                    <FlexContainer>
-                      <Switch>
-                        <Route
-                          exact
-                          path={`${routerLocation.pathname}`}
-                          component={() => (
-                            <FlexContainer mg="10px 0" column>
-                              {isLoadingFweets ? (
-                                <div>Loading fweets</div>
-                              ) : (
-                                <FlexContainer>
-                                  {profileFweets ? (
-                                    <Fweets fweets={profileFweets} />
-                                  ) : (
-                                    <div>No fweets yet.</div>
-                                  )}
-                                </FlexContainer>
-                              )}
-                            </FlexContainer>
-                          )}
-                        />
-                        <Route
+                  <TabList
+                    items={[
+                      {
+                        text: 'Fweets',
+                        // to: `${routerLocation.pathname}`,
+                        selected: true,
+                      },
+                      // {
+                      //   text: 'Fweets & Replies',
+                      //   to: `${routerLocation.pathname}/with_replies`,
+                      // },
+                      // {
+                      //   text: 'Likes',
+                      //   to: `${routerLocation.pathname}/likes`,
+                      // },
+                    ]}
+                  />
+                  <FlexContainer>
+                    <Switch>
+                      <Route
+                        exact
+                        path={`${routerLocation.pathname}`}
+                        component={() => (
+                          <FlexContainer mg="10px 0" column>
+                            {isLoadingFweets ? (
+                              <div>Loading fweets</div>
+                            ) : (
+                              <FlexContainer>
+                                {profileFweets ? (
+                                  <Fweets fweets={profileFweets} />
+                                ) : (
+                                  <div>No fweets yet.</div>
+                                )}
+                              </FlexContainer>
+                            )}
+                          </FlexContainer>
+                        )}
+                      />
+                      {/* <Route
                           exact
                           path={`${routerLocation.pathname}/with_replies`}
                           component={() => <div>Fweets replies</div>}
@@ -298,10 +297,9 @@ const Profile = ({
                           exact
                           path={`${routerLocation.pathname}/likes`}
                           component={() => <div>No likes yet</div>}
-                        />
-                      </Switch>
-                    </FlexContainer>
-                  </Router>
+                        /> */}
+                    </Switch>
+                  </FlexContainer>
                 </FlexContainer>
               </FlexContainer>
             ) : null;
