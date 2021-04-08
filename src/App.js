@@ -48,7 +48,7 @@ function App(props) {
           {/* Authenticated */}
           {props.authenticated ? <Navbar /> : null}
           <main>
-            <FlexContainer>
+            <FlexContainer ai="flex-start">
               <Switch>
                 <PrivateRoute
                   authenticated={props.authenticated}
