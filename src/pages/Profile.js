@@ -34,7 +34,6 @@ const Profile = ({
   currentUser,
   ...props
 }) => {
-  const routerLocation = useLocation();
   const [profileUser, setProfileUser] = useState();
   const [profileFweets, setProfileFweets] = useState();
   const [isLoadingFweets, setIsLoadingFweets] = useState(true);
@@ -44,6 +43,8 @@ const Profile = ({
     // Get profile user from link state
     if (location.state.profileUserId) {
       const profileUserId = location.state.profileUserId;
+      setProfileFweets(null);
+      setProfileUser(null);
 
       if (profileUserId === currentUser.id) {
         setProfileUser(currentUser);
@@ -52,6 +53,7 @@ const Profile = ({
       }
 
       const user = props.allUsers[profileUserId];
+      setIsLoadingFweets(true);
       setProfileUser(user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,201 +125,139 @@ const Profile = ({
   return (
     <div>
       {isProfileSetupOpen ? <ProfileSetup close={closeProfileSetup} /> : null}
-      <Switch>
-        <Route
-          exact
-          path={routerLocation.pathname}
-          render={() => {
-            return profileUser ? (
-              <FlexContainer className="page-container">
-                <FlexContainer className="page-name-container">
-                  <Link to="/home">
+
+      {profileUser ? (
+        <FlexContainer className="page-container">
+          <FlexContainer className="page-name-container">
+            <Link to="/home">
+              <Icon
+                mg="0 10px"
+                wt="24px"
+                ht="24px"
+                imgUrl="/images/left-arrow-icon.png"
+              />
+            </Link>
+            <FlexContainer column jc="space-evenly" ai="flex-start" mg="0 20px">
+              <Span weight="600">
+                {profileUser ? profileUser.name : 'Foxtter'}
+              </Span>
+              <LightText size="0.8em">
+                {profileUser && profileFweets ? profileFweets.length : '0'}{' '}
+                Fweets
+              </LightText>
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer column jc="flex-start" ai="flex-start">
+            {/* Images */}
+            <Container wt="100%" ht="200px">
+              <BackgroundImage
+                className="profile-background"
+                alt="header-image"
+                src={
+                  profileUser.backgroundUrl
+                    ? profileUser.backgroundUrl
+                    : '/images/foxtter-landing-page-background.jfif'
+                }
+              >
+                <Container className="profile-page-picture-container">
+                  <ProfilePicture
+                    imgUrl={profileUser.pictureUrl}
+                    width="135px"
+                    height="135px"
+                    border={true}
+                  />
+                </Container>
+              </BackgroundImage>
+            </Container>
+
+            {/* Profile buttons */}
+            <FlexContainer
+              mg="5px 0"
+              jc="flex-end"
+              ht="50px"
+              mht="50px"
+              pd="0 16px"
+            >
+              {/* Current user profile ? */}
+              {currentUser.id === profileUser.id ? (
+                <Button onClick={openProfileSetup} wt="auto" ht="38px">
+                  Set up profile
+                </Button>
+              ) : (
+                <FlexContainer wt="auto">
+                  <HighlightCircle mg="0 10px" border>
                     <Icon
-                      mg="0 10px"
-                      wt="24px"
-                      ht="24px"
-                      imgUrl="/images/left-arrow-icon.png"
+                      wt="16px"
+                      ht="16px"
+                      imgUrl="/images/messages-icon.png"
                     />
-                  </Link>
-                  <FlexContainer
-                    column
-                    jc="space-evenly"
-                    ai="flex-start"
-                    mg="0 20px"
-                  >
-                    <Span weight="600">
-                      {profileUser ? profileUser.name : 'Foxtter'}
-                    </Span>
-                    <LightText size="0.8em">
-                      {profileUser && profileFweets
-                        ? profileFweets.length
-                        : '0'}{' '}
-                      Fweets
-                    </LightText>
-                  </FlexContainer>
+                  </HighlightCircle>
+                  <FollowToggle targetUser={profileUser} />
                 </FlexContainer>
+              )}
+            </FlexContainer>
 
-                <FlexContainer column jc="flex-start" ai="flex-start">
-                  {/* Images */}
-                  <Container wt="100%" ht="200px">
-                    <BackgroundImage
-                      className="profile-background"
-                      alt="header-image"
-                      src={
-                        profileUser.backgroundUrl
-                          ? profileUser.backgroundUrl
-                          : '/images/foxtter-landing-page-background.jfif'
-                      }
-                    >
-                      <Container className="profile-page-picture-container">
-                        <ProfilePicture
-                          imgUrl={profileUser.pictureUrl}
-                          width="135px"
-                          height="135px"
-                          border={true}
-                        />
-                      </Container>
-                    </BackgroundImage>
-                  </Container>
+            {/* User info */}
+            <FlexContainer
+              column
+              jc="space-between"
+              ai="flex-start"
+              pd="10px 15px"
+              ht="100%"
+              mht="100px"
+            >
+              <Container>
+                <Text size="1.3em" weight="600">
+                  {profileUser ? profileUser.name : 'Foxtter'}
+                </Text>
+                <LightText mg="5px 0">
+                  {profileUser ? `@${profileUser.username}` : '@username'}
+                </LightText>
+              </Container>
 
-                  {/* Profile buttons */}
-                  <FlexContainer
-                    mg="5px 0"
-                    jc="flex-end"
-                    ht="50px"
-                    mht="50px"
-                    pd="0 16px"
-                  >
-                    {/* Current user profile ? */}
-                    {currentUser.id === profileUser.id ? (
-                      <Button onClick={openProfileSetup} wt="auto" ht="38px">
-                        Set up profile
-                      </Button>
-                    ) : (
-                      <FlexContainer wt="auto">
-                        <HighlightCircle mg="0 10px" border>
-                          <Icon
-                            wt="16px"
-                            ht="16px"
-                            imgUrl="/images/messages-icon.png"
-                          />
-                        </HighlightCircle>
-                        <FollowToggle targetUser={profileUser} />
-                      </FlexContainer>
-                    )}
-                  </FlexContainer>
+              {profileUser && profileUser.description ? (
+                <Text mg="10px 0">{profileUser.description}</Text>
+              ) : null}
 
-                  {/* User info */}
-                  <FlexContainer
-                    column
-                    jc="space-between"
-                    ai="flex-start"
-                    pd="10px 15px"
-                    ht="100%"
-                    mht="100px"
-                  >
-                    <Container>
-                      <Text size="1.3em" weight="600">
-                        {profileUser ? profileUser.name : 'Foxtter'}
-                      </Text>
-                      <LightText mg="5px 0">
-                        {profileUser ? `@${profileUser.username}` : '@username'}
-                      </LightText>
-                    </Container>
-
-                    {profileUser && profileUser.description ? (
-                      <Text mg="10px 0">{profileUser.description}</Text>
-                    ) : null}
-
-                    <FlexContainer jc="flex-start" mg="15px 0">
-                      <FlexContainer wt="auto">
-                        <Text
-                          as={Link}
-                          to={`${routerLocation.pathname}/following`}
-                        >
-                          {profileUser ? profileUser.following.length : '0'}{' '}
-                          Following
-                        </Text>
-                        <Text
-                          mg="0 10px"
-                          as={Link}
-                          to={`${routerLocation.pathname}/followers`}
-                        >
-                          {profileUser ? profileUser.followers.length : '0'}{' '}
-                          Followers
-                        </Text>
-                      </FlexContainer>
-                    </FlexContainer>
-                  </FlexContainer>
-
-                  <Router>
-                    <TabList
-                      items={[
-                        {
-                          text: 'Fweets',
-                          to: `${routerLocation.pathname}`,
-                          selected: true,
-                        },
-                        {
-                          text: 'Fweets & Replies',
-                          to: `${routerLocation.pathname}/with_replies`,
-                        },
-                        {
-                          text: 'Likes',
-                          to: `${routerLocation.pathname}/likes`,
-                        },
-                      ]}
-                    />
-                    <FlexContainer>
-                      <Switch>
-                        <Route
-                          exact
-                          path={`${routerLocation.pathname}`}
-                          component={() => (
-                            <FlexContainer mg="10px 0" column>
-                              {isLoadingFweets ? (
-                                <div>Loading fweets</div>
-                              ) : (
-                                <FlexContainer>
-                                  {profileFweets ? (
-                                    <Fweets fweets={profileFweets} />
-                                  ) : (
-                                    <div>No fweets yet.</div>
-                                  )}
-                                </FlexContainer>
-                              )}
-                            </FlexContainer>
-                          )}
-                        />
-                        <Route
-                          exact
-                          path={`${routerLocation.pathname}/with_replies`}
-                          component={() => <div>Fweets replies</div>}
-                        />
-                        <Route
-                          exact
-                          path={`${routerLocation.pathname}/likes`}
-                          component={() => <div>No likes yet</div>}
-                        />
-                      </Switch>
-                    </FlexContainer>
-                  </Router>
+              <FlexContainer jc="flex-start" mg="15px 0">
+                <FlexContainer wt="auto">
+                  <Text>
+                    {profileUser ? profileUser.following.length : '0'} Following
+                  </Text>
+                  <Text mg="0 10px">
+                    {profileUser ? profileUser.followers.length : '0'} Followers
+                  </Text>
                 </FlexContainer>
               </FlexContainer>
-            ) : null;
-          }}
-        />
-        <Route
-          exact
-          path={`${routerLocation.pathname}/following`}
-          component={() => <div>following</div>}
-        />
-        <Route
-          exact
-          path={`${routerLocation.pathname}/followers`}
-          component={() => <div>followers</div>}
-        />
-      </Switch>
+            </FlexContainer>
+
+            <TabList
+              items={[
+                {
+                  text: 'Fweets',
+                  selected: true,
+                },
+              ]}
+            />
+            <FlexContainer mg="10px 0" column>
+              {isLoadingFweets ? (
+                <div>Loading fweets</div>
+              ) : (
+                <FlexContainer>
+                  {profileFweets ? (
+                    <Fweets fweets={profileFweets} />
+                  ) : (
+                    <div>No fweets yet.</div>
+                  )}
+                </FlexContainer>
+              )}
+            </FlexContainer>
+          </FlexContainer>
+        </FlexContainer>
+      ) : (
+        <div>Loading</div>
+      )}
     </div>
   );
 
