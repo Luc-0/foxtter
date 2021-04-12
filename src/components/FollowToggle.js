@@ -8,6 +8,7 @@ import {
 } from '../redux/actions';
 
 import { follow, unfollow } from '../helpers/firestore';
+import { cleanup } from '@testing-library/react';
 
 const FollowToggle = ({
   currentUser,
@@ -18,18 +19,27 @@ const FollowToggle = ({
 }) => {
   const [following, setFollowing] = useState(false);
   const [handlingFollow, setHandlingFollow] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
-    if (currentUser && currentUser.following && targetUser) {
-      if (isFollowing(currentUser.following, targetUser.id)) {
-        setFollowing(true);
-      } else {
-        setFollowing(false);
-      }
-    }
+    return function cleanup() {
+      setIsMounted(false);
+    };
+  }, []);
 
+  useEffect(() => {
+    if (isMounted) {
+      updateFollowDisplay(currentUser, targetUser);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser.following]);
+
+  useEffect(() => {
+    if (isMounted) {
+      updateFollowDisplay(currentUser, targetUser);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetUser]);
 
   return (
     <Container wt="auto" mg={margin} onClick={handleClick}>
@@ -97,6 +107,16 @@ const FollowToggle = ({
     }
 
     return false;
+  }
+
+  function updateFollowDisplay(currentUser, targetUser) {
+    if (currentUser && currentUser.following && targetUser) {
+      if (isFollowing(currentUser.following, targetUser.id)) {
+        setFollowing(true);
+      } else {
+        setFollowing(false);
+      }
+    }
   }
 };
 

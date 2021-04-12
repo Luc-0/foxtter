@@ -212,10 +212,12 @@ function ProfileSetup({ currentUser, close, ...props }) {
       // does not have any update;
       if (Object.keys(userUpdate).length === 0) {
         setIsHandlingSave(false);
+        close();
         return;
       }
 
       props.updateUser(currentUser.id, userUpdate);
+      close();
     } catch (error) {
       console.log('saving profile changes error', error);
       return;
