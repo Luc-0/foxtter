@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import { FlexContainer } from './components/StyledComponents';
+import { FlexContainer, Container } from './components/StyledComponents';
 import ProfileCard from './components/ProfileCard';
 import Connect from './pages/Connect';
 import Fweet from './pages/Fweet';
@@ -44,57 +44,59 @@ function App(props) {
           component={Login}
         />
 
-        <FlexContainer jc="flex-start" ai="flex-start">
-          {/* Authenticated */}
-          {props.authenticated ? <Navbar /> : null}
-          <main>
-            <FlexContainer ai="flex-start">
-              <Switch>
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/home"
-                  component={Home}
-                />
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/notifications"
-                  component={() => <div>Notifications</div>}
-                />
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/messages"
-                  component={() => <div>Messages</div>}
-                />
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/connect_people"
-                  component={Connect}
-                />
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/:id"
-                  component={Profile}
-                />
-                <PrivateRoute
-                  authenticated={props.authenticated}
-                  exact
-                  path="/:id/status/:id"
-                  component={Fweet}
-                />
-              </Switch>
-              <FlexContainer column>
-                <SearchUser />
-                <ProfileCard />
-                <ProfileCard />
+        <Container wt="100%" ht="100%" className="app-container">
+          <FlexContainer jc="flex-start" ai="flex-start">
+            {/* Authenticated */}
+            {props.authenticated ? <Navbar /> : null}
+            <main>
+              <FlexContainer ai="flex-start">
+                <Switch>
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/home"
+                    component={Home}
+                  />
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/notifications"
+                    component={() => <div>Notifications</div>}
+                  />
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/messages"
+                    component={() => <div>Messages</div>}
+                  />
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/connect_people"
+                    component={Connect}
+                  />
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/:id"
+                    component={Profile}
+                  />
+                  <PrivateRoute
+                    authenticated={props.authenticated}
+                    exact
+                    path="/:id/status/:id"
+                    component={Fweet}
+                  />
+                </Switch>
+                <FlexContainer column>
+                  <SearchUser />
+                  <ProfileCard />
+                  <ProfileCard />
+                </FlexContainer>
               </FlexContainer>
-            </FlexContainer>
-          </main>
-        </FlexContainer>
+            </main>
+          </FlexContainer>
+        </Container>
       </Switch>
     </Router>
   );

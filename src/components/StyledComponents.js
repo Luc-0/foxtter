@@ -83,6 +83,12 @@ const Container = styled.div`
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
   border-radius: ${(props) => (props.br ? props.br : '')};
 
+  &.app-container {
+    max-width: 1400px;
+    min-width: 940px;
+    margin: 0 auto;
+  }
+
   &.page-name-container {
     border-bottom: 1px solid ${COLORS.borderColor};
     width: 100%;
