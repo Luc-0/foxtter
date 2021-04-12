@@ -11,7 +11,7 @@ export async function createFweet(userId, fweet) {
 
 export async function createRefweet(userId, fweetContent, target) {
   try {
-    const dateCreated = firestore.Timestamp.now().toDate();
+    const dateCreated = firestore.Timestamp.now();
     const newFweet = {
       ...fweetContent,
       likes: 0,
