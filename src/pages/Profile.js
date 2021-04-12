@@ -195,13 +195,13 @@ const Profile = ({
                 </Button>
               ) : (
                 <FlexContainer wt="auto">
-                  <HighlightCircle mg="0 10px" border>
+                  {/* <HighlightCircle mg="0 10px" border>
                     <Icon
                       wt="16px"
                       ht="16px"
                       imgUrl="/images/messages-icon.png"
                     />
-                  </HighlightCircle>
+                  </HighlightCircle> */}
                   <FollowToggle targetUser={profileUser} />
                 </FlexContainer>
               )}
