@@ -20,16 +20,14 @@ const FollowToggle = ({
   const [handlingFollow, setHandlingFollow] = useState(false);
 
   useEffect(() => {
-    if (currentUser && currentUser.following && targetUser) {
-      if (isFollowing(currentUser.following, targetUser.id)) {
-        setFollowing(true);
-      } else {
-        setFollowing(false);
-      }
-    }
+    updateFollowDisplay(currentUser, targetUser);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser.following]);
+
+  useEffect(() => {
+    updateFollowDisplay(currentUser, targetUser);
+  }, [targetUser]);
 
   return (
     <Container wt="auto" mg={margin} onClick={handleClick}>
@@ -97,6 +95,16 @@ const FollowToggle = ({
     }
 
     return false;
+  }
+
+  function updateFollowDisplay(currentUser, targetUser) {
+    if (currentUser && currentUser.following && targetUser) {
+      if (isFollowing(currentUser.following, targetUser.id)) {
+        setFollowing(true);
+      } else {
+        setFollowing(false);
+      }
+    }
   }
 };
 
