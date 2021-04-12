@@ -13,7 +13,6 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { FlexContainer, Container } from './components/StyledComponents';
-import ProfileCard from './components/ProfileCard';
 import Connect from './pages/Connect';
 import Fweet from './pages/Fweet';
 import SearchUser from './components/SearchUser';
@@ -90,8 +89,6 @@ function App(props) {
                 </Switch>
                 <FlexContainer column>
                   <SearchUser />
-                  <ProfileCard />
-                  <ProfileCard />
                 </FlexContainer>
               </FlexContainer>
             </main>
