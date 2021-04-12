@@ -59,6 +59,15 @@ const Profile = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state.profileUserId]);
 
+  useEffect(() => {
+    if (currentUser && profileUser) {
+      if (currentUser.id === profileUser.id) {
+        setProfileUser(currentUser);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
+
   // On page load, load profile user fweets
   useEffect(() => {
     if (profileUser) {
