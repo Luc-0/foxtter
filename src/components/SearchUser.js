@@ -61,6 +61,9 @@ function SearchUser(props) {
           onMouseLeave={() => {
             setHasMouseOverResult(false);
           }}
+          onClick={() => {
+            setHasMouseOverResult(false);
+          }}
         >
           {isSearching ? (
             <FlexContainer>Searching...</FlexContainer>
