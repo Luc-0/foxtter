@@ -63,9 +63,14 @@ const Fweet = ({
   useEffect(() => {
     if (props.all && fweet) {
       const user = props.all[fweet.user.id];
+
+      if (!user) {
+        return;
+      }
+
       const updatedFweet = user.fweets[fweet.id];
 
-      if (!user || !updatedFweet) {
+      if (!updatedFweet) {
         return;
       }
 
