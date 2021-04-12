@@ -61,11 +61,15 @@ const users = (state = initialState, action) => {
       const fweetId = action.payload.fweetId;
       const fweetData = action.payload.fweetData;
 
-      const user = state.all[userId];
-      if (!user) return state;
+      let user = state.all[userId];
+      if (!user) {
+        user = {};
+      }
 
-      const userFweets = user.fweets;
-      if (!userFweets || !userFweets[fweetId]) return state;
+      let userFweets = user.fweets;
+      if (!userFweets) {
+        userFweets = {};
+      }
 
       const newUser = {
         ...user,

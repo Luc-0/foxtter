@@ -55,7 +55,6 @@ const NavButton = styled(Button)`
   border: none;
   color: ${COLORS.black};
   font-size: ${(props) => (props.size ? props.size : '1.3em')};
-  padding: 0.25em 1.5em;
   width: ${(props) => (props.wt ? props.wt : 'auto')};
   font-weight: 700;
 
@@ -82,6 +81,12 @@ const Container = styled.div`
   padding: ${(props) => (props.pd ? props.pd : '0')};
   background-color: ${(props) => (props.bgc ? props.bgc : '')};
   border-radius: ${(props) => (props.br ? props.br : '')};
+
+  &.app-container {
+    max-width: 1400px;
+    min-width: 940px;
+    margin: 0 auto;
+  }
 
   &.page-name-container {
     border-bottom: 1px solid ${COLORS.borderColor};
