@@ -55,7 +55,6 @@ const NavButton = styled(Button)`
   border: none;
   color: ${COLORS.black};
   font-size: ${(props) => (props.size ? props.size : '1.3em')};
-  padding: 0.25em 1.5em;
   width: ${(props) => (props.wt ? props.wt : 'auto')};
   font-weight: 700;
 
