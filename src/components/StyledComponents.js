@@ -200,6 +200,13 @@ const Container = styled.div`
   &.pointer {
     cursor: pointer;
   }
+
+  &.form {
+    width: 33%;
+    height: auto;
+    min-width: 300px;
+    max-width: 400px;
+  }
 `;
 
 const FlexContainer = styled(Container)`

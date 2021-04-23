@@ -60,7 +60,7 @@ const Signup = (props) => {
   return (
     <TransparentBackground wt="100vw" ht="100vh">
       <FlexContainer id="signup-background" onClick={closeSignup}>
-        <Container as="form" wt="40%" ht="500px" bgc="#fff" br="20px" pd="2%">
+        <Container as="form" className="form" bgc="#fff" br="20px" pd="20px">
           <Icon imgUrl="images/foxtter-icon.png" mg="0 auto" />
           <Text size="1.6em" weight="700" mg="15px 0">
             Create your account

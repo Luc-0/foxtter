@@ -44,8 +44,8 @@ const Login = (props) => {
       {signupOpen ? <Signup handleClose={closeSignup} /> : null}
       <Container
         as="form"
+        className="form"
         onSubmit={handleSubmit}
-        wt="25%"
         mg="0 auto"
         pd="10px 0"
       >
