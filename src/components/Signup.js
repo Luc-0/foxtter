@@ -41,18 +41,21 @@ const Signup = (props) => {
       border: false,
       valid: false,
       value: '',
+      warning: false,
     },
     email: {
       name: 'email',
       border: false,
       valid: false,
       value: '',
+      warning: false,
     },
     password: {
       name: 'password',
       border: false,
       valid: false,
       value: '',
+      warning: false,
     },
   });
   const [tryAgain, setTryAgain] = useState(false);
@@ -60,56 +63,74 @@ const Signup = (props) => {
   return (
     <TransparentBackground wt="100vw" ht="100vh">
       <FlexContainer id="signup-background" onClick={closeSignup}>
-        <Container as="form" wt="40%" ht="500px" bgc="#fff" br="20px" pd="2%">
+        <Container
+          as="form"
+          className="form signup"
+          bgc="#fff"
+          br="20px"
+          pd="20px"
+        >
           <Icon imgUrl="images/foxtter-icon.png" mg="0 auto" />
           <Text size="1.6em" weight="700" mg="15px 0">
             Create your account
           </Text>
           <Container mg="0 0 20px">
-            <Text as="label" htmlFor="signup-name" size="1.3em">
+            <Text as="label" className="signup-label" size="1.3em">
               Name
+              <Input
+                name={signupForm.name.name}
+                onChange={handleInputChange}
+                value={signupForm.name.value}
+                valid={signupForm.name.valid}
+                border={signupForm.name.border}
+                required
+                mg="10px 0"
+              />
+              {signupForm.name.warning
+                ? getWarningList(['Only letters', 'Length 3-30'])
+                : null}
+              {signupForm.name.value !== '' && !signupForm.name.valid
+                ? getLengthWarning(signupForm.name.value.length, 3, 30)
+                : null}
             </Text>
-            <Input
-              id="signup-name"
-              name={signupForm.name.name}
-              onChange={handleInputChange}
-              value={signupForm.name.value}
-              valid={signupForm.name.valid}
-              border={signupForm.name.border}
-              required
-              mg="10px 0"
-            />
           </Container>
           <Container mg="0 0 20px">
-            <Text as="label" htmlFor="signup-email" size="1.3em">
+            <Text as="label" size="1.3em">
               Email
+              <Input
+                type="text"
+                name={signupForm.email.name}
+                onChange={handleInputChange}
+                value={signupForm.email.value}
+                valid={signupForm.email.valid}
+                border={signupForm.email.border}
+                required
+                mg="10px 0"
+              />
+              {signupForm.email.warning ? (
+                <p className="signup-warning">Invalid email</p>
+              ) : null}
             </Text>
-            <Input
-              type="text"
-              id="signup-email"
-              name={signupForm.email.name}
-              onChange={handleInputChange}
-              value={signupForm.email.value}
-              valid={signupForm.email.valid}
-              border={signupForm.email.border}
-              required
-              mg="10px 0"
-            />
           </Container>
           <Container mg="0 0 20px">
-            <Text as="label" htmlFor="signup-password" size="1.3em">
+            <Text as="label" className="signup-label" size="1.3em">
               Password
+              <Input
+                type="password"
+                name={signupForm.password.name}
+                onChange={handleInputChange}
+                value={signupForm.password.value}
+                valid={signupForm.password.valid}
+                border={signupForm.password.border}
+                mg="10px 0"
+              />
+              {signupForm.password.value !== '' && !signupForm.password.valid
+                ? getLengthWarning(signupForm.password.value.length, 6, 21)
+                : null}
+              {signupForm.password.warning ? (
+                <p className="signup-warning">Length 6-21</p>
+              ) : null}
             </Text>
-            <Input
-              id="signup-password"
-              type="password"
-              name={signupForm.password.name}
-              onChange={handleInputChange}
-              value={signupForm.password.value}
-              valid={signupForm.password.valid}
-              border={signupForm.password.border}
-              mg="10px 0"
-            />
           </Container>
           <Button onClick={handleSubmit} weight="700" primary>
             Create Account
@@ -148,8 +169,32 @@ const Signup = (props) => {
         ...signupForm[inputName],
         value: inputValue,
         border: false,
+        valid: false,
       },
     });
+  }
+
+  function getWarningList(list) {
+    return (
+      <ul className="signup-warning">
+        {list.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+
+  function getLengthWarning(length, minLength, maxLength) {
+    return (
+      <div class="signup-length">
+        <span
+          className={length > maxLength || length < minLength ? 'invalid' : ''}
+        >
+          {length}
+        </span>
+        /{maxLength}
+      </div>
+    );
   }
 
   async function validationCheck() {
@@ -166,7 +211,7 @@ const Signup = (props) => {
     }
     const validEmail = validEmailFormat && !isUsed;
 
-    const validPassword = password.length >= 6;
+    const validPassword = password.length >= 6 && password.length <= 21;
 
     if (validName) {
       updateInput(signupForm.name.name, true);
@@ -198,6 +243,7 @@ const Signup = (props) => {
             ...prevSignupForm[inputName],
             border: true,
             valid: true,
+            warning: false,
           },
         };
       });
@@ -209,6 +255,7 @@ const Signup = (props) => {
             ...prevSignupForm[inputName],
             border: true,
             valid: false,
+            warning: true,
           },
         };
       });

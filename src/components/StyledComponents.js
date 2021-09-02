@@ -200,6 +200,36 @@ const Container = styled.div`
   &.pointer {
     cursor: pointer;
   }
+
+  &.form {
+    width: 33%;
+    height: auto;
+    min-width: 300px;
+    max-width: 400px;
+    z-index: 2;
+  }
+
+  &.signup .signup-warning {
+    font-size: 1rem;
+    color: ${COLORS.black};
+    padding: 0 10px;
+    list-style: inside;
+  }
+  &.signup .signup-label {
+    position: relative;
+  }
+
+  &.signup .signup-label .signup-length {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  &.signup .signup-label .signup-length .invalid {
+    color: ${COLORS.invalid};
+  }
 `;
 
 const FlexContainer = styled(Container)`
