@@ -8,7 +8,6 @@ import {
 } from '../redux/actions';
 
 import { follow, unfollow } from '../helpers/firestore';
-import { cleanup } from '@testing-library/react';
 
 const FollowToggle = ({
   currentUser,

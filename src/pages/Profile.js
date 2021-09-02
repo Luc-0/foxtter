@@ -7,16 +7,9 @@ import {
   Container,
   Button,
   Text,
-  HighlightCircle,
 } from '../components/StyledComponents';
 
-import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  Switch,
-  useLocation,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { updateUserFweets } from '../redux/actions';
